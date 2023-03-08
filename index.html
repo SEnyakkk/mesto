@@ -28,103 +28,79 @@
           <div class="profile__info">
             <div class="profile__info-container">
               <h1 class="profile__info-title">Жак-Ив Кусто</h1>
-              <button class="profile__edit-button"></button>
+              <button class="profile__edit-button" type="button"></button>
             </div>
             <h2 class="profile__info-subtitle">Исследователь океана</h2>
           </div>
         </div>
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button"></button>
       </section>
       <section class="elements" aria-label="ваш фотоальбом">
         <ul class="elements__list">
           <li class="element">
             <img
               src="./images/karachaevsk.jpg"
-              alt="фото чего-то"
+              alt="Карачаевская архитектура"
               class="element__image"
             />
             <div class="element__container">
-              <p class="element__text">Карачаевск</p>
-              <img
-                src="./images/like.svg"
-                alt="понравилось"
-                class="element__group"
-              />
+              <h2 class="element__text">Карачаевск</h2>
+              <button class="element__group" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img
               src="./images/tuman.png"
-              alt="фото чего-то"
+              alt="Гора в тумане"
               class="element__image"
             />
             <div class="element__container">
-              <p class="element__text">Гора Эльбрус</p>
-              <img
-                src="./images/like.svg"
-                alt="понравилось"
-                class="element__group"
-              />
+              <h2 class="element__text">Гора Эльбрус</h2>
+              <button class="element__group" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img
               src="./images/gora.jpg"
-              alt="фото чего-то"
+              alt="Скалистые горы"
               class="element__image"
             />
             <div class="element__container">
-              <p class="element__text">Домбай</p>
-              <img
-                src="./images/like.svg"
-                alt="понравилось"
-                class="element__group element__group_active"
-              />
+              <h2 class="element__text">Домбай</h2>
+              <button class="element__group" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img
               src="./images/tuman.png"
-              alt="фото чего-то"
+              alt="Гора в тумане"
               class="element__image"
             />
             <div class="element__container">
-              <p class="element__text">Гора Эльбрус</p>
-              <img
-                src="./images/like.svg"
-                alt="понравилось"
-                class="element__group"
-              />
+              <h2 class="element__text">Гора Эльбрус</h2>
+              <button class="element__group" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img
-              src="./images/gora.jpg"
-              alt="фото чего-то"
+              src="https://placekitten.com/g/800/400"
+              alt="Кот"
               class="element__image"
             />
             <div class="element__container">
-              <p class="element__text">Домбай</p>
-              <img
-                src="./images/like.svg"
-                alt="понравилось"
-                class="element__group"
-              />
+              <h2 class="element__text">Котэ</h2>
+              <button class="element__group" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img
-              src="./images/karachaevsk.jpg"
-              alt="фото чего-то"
+              src="https://placekitten.com/g/200/400 "
+              alt="Черкесский седой кот"
               class="element__image"
             />
             <div class="element__container">
-              <p class="element__text">Карачаево-Черкесия</p>
-              <img
-                src="./images/like.svg"
-                alt="понравилось"
-                class="element__group"
-              />
+              <h2 class="element__text">Карачаево-Черкесский Котэ</h2>
+              <button class="element__group" type="button"></button>
             </div>
           </li>
         </ul>
@@ -133,17 +109,18 @@
     <footer class="footer">
       <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
-    <section class="popup">
+    <div class="popup">
       <div class="popup__container">
-        <button class="popup__close-button"></button>
-        <form class="form">
-          <h1 class="form__title">Редактировать профиль</h1>
-          <input type="text" class="form__info-title" />
-          <input type="text" class="form__info-subtitle" />
+        <button class="popup__close-button" type="button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="form" name="profile-editform">
+          <input type="text" class="form__data form__data_username" name="username" placeholder="Ведите имя"/>
+          <input type="text" class="form__data form__data_userjob" name="userjob" placeholder="О себе"/>
+          <!-- form__data_usermane и form__data_userjob классы для определения в JS-->
           <input type="submit" class="form__save" value="Сохранить" />
         </form>
       </div>
-    </section>
-    <script src="./scripts/script.js"></script>
+    </div>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>

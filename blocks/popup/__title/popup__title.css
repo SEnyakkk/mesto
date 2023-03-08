@@ -1,16 +1,16 @@
-.form__title {
+.popup__title {
   margin: 0;
   width: 330px;
-  padding: 34px 64px 54px 36px;
+  padding: 34px 64px 40px 36px;
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
 }
 
 @media screen and (max-width: 634px) {
-  .form__title {
+  .popup__title {
+    padding: 25px 22px 71px;
     width: 238px;
-    font-weight: 900;
     font-size: 18px;
     line-height: 22px;
   }
