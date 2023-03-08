@@ -9,7 +9,6 @@ const infoSubtitle = profileInfo.querySelector('.profile__info-subtitle');
 const userData = document.querySelector('.form');
 const inputTitle = userData.querySelector('.form__data_username');
 const inputSubtitle = userData.querySelector('.form__data_userjob');
-const saveButton = userData.querySelector('.form__save')
 
 const popupOpened = function () {
   popupElement.classList.add('popup_opened');
