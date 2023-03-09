@@ -1,4 +1,3 @@
-console.log('Welcome to Mesto JS')
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupElement = document.querySelector('.popup');
@@ -7,8 +6,8 @@ const profileInfo = document.querySelector('.profile__info');
 const infoTitle = profileInfo.querySelector('.profile__info-title');
 const infoSubtitle = profileInfo.querySelector('.profile__info-subtitle');
 const userData = document.querySelector('.form');
-const inputTitle = userData.querySelector('.form__data_username');
-const inputSubtitle = userData.querySelector('.form__data_userjob');
+const inputTitle = userData.querySelector('.form__data_user_name');
+const inputSubtitle = userData.querySelector('.form__data_user_job');
 
 const popupOpened = function () {
   popupElement.classList.add('popup_opened');
