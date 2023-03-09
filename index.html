@@ -18,13 +18,11 @@
     <main class="main">
       <section class="profile">
         <div class="profile__nav">
-          <div class="profile__avatar">
-            <img
-              src="./images/profilephoto.jpg"
-              alt="фото профиля"
-              class="profile__photo"
-            />
-          </div>
+          <img
+            src="./images/profilephoto.jpg"
+            alt="фото профиля"
+            class="profile__avatar"
+          />
           <div class="profile__info">
             <div class="profile__info-container">
               <h1 class="profile__info-title">Жак-Ив Кусто</h1>
@@ -83,23 +81,23 @@
           </li>
           <li class="element">
             <img
-              src="https://placekitten.com/g/800/400"
-              alt="Кот"
+              src="./images/gora.jpg"
+              alt="горы Домбая"
               class="element__image"
             />
             <div class="element__container">
-              <h2 class="element__text">Котэ</h2>
+              <h2 class="element__text">Домбай</h2>
               <button class="element__group" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img
-              src="https://placekitten.com/g/200/400 "
-              alt="Черкесский седой кот"
+              src="./images/karachaevsk.jpg"
+              alt="Черкесская архитектура"
               class="element__image"
             />
             <div class="element__container">
-              <h2 class="element__text">Карачаево-Черкесский Котэ</h2>
+              <h2 class="element__text">Карачаево-Черкесия</h2>
               <button class="element__group" type="button"></button>
             </div>
           </li>
@@ -114,8 +112,18 @@
         <button class="popup__close-button" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="form" name="profile-editform">
-          <input type="text" class="form__data form__data_username" name="username" placeholder="Ведите имя"/>
-          <input type="text" class="form__data form__data_userjob" name="userjob" placeholder="О себе"/>
+          <input
+            type="text"
+            class="form__data form__data_user_name"
+            name="username"
+            placeholder="Ведите имя"
+          />
+          <input
+            type="text"
+            class="form__data form__data_user_job"
+            name="userjob"
+            placeholder="О себе"
+          />
           <!-- form__data_usermane и form__data_userjob классы для определения в JS-->
           <input type="submit" class="form__save" value="Сохранить" />
         </form>
