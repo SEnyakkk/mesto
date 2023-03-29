@@ -9,10 +9,13 @@
   background-size: 10px 10px;
   border: 1px solid #fff;
   padding: 0;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .profile__edit-button:hover {
   opacity: .6;
+  transition: opacity 0.5s ease-in-out;
 }
 
 @media screen and (max-width: 767px) {

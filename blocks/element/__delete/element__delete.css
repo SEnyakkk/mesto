@@ -1,18 +1,22 @@
-.element__group {
+.element__delete {
   cursor: pointer;
-  margin: 0 20px;
-  width: 22px;
+  margin: 0;
+  padding: 0;
+  width: 18px;
   height: 19px;
-  background-image: url(../../../images/like.svg);
+  background-image: url(../../../images/trash.svg);
+  background-color: transparent;
   background-size: contain;
   background-repeat: no-repeat;
   border: none;
-  background-color: #fff;
+  position: absolute;
+  top: 20px;
+  right: 20px;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
 
-.element__group:hover {
+.element__delete:hover {
   opacity: .5;
   transition: opacity 0.5s ease-in-out;
 }
