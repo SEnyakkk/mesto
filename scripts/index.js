@@ -1,4 +1,4 @@
-// попап для профиля
+/* // попап для профиля
 const editButton = document.querySelector('.profile__edit-button');
 const popupElement = document.querySelector('.popup');
 const closeButton = popupElement.querySelector('.popup__close-button');
@@ -25,11 +25,10 @@ const handleFormSubmit = function (e) {
   infoTitle.textContent = inputTitle.value;
   infoSubtitle.textContent = inputSubtitle.value;
   popupClosed()
-}
+} */
 
 //галерея при открытии страницы
-const elementTemplate = document.querySelector('#element-template').content;
-const elementsItem = document.querySelector('.elements')
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -57,14 +56,43 @@ const initialCards = [
   }
 ];
 
+const elementTemplate = document.querySelector('.element-template').content;
+const elementsList = document.querySelector('.elements__list');
+const elementDelete = elementTemplate.querySelector('.element__delete')
 
+initialCards.forEach(createCard);
+
+function createCard (name, link) {
+  const card = elementTemplate.querySelector('.element').cloneNode(true);
+  const cardImage = card.querySelector('.element__image');
+  cardImage.src = link;
+  cardImage.alt = name;
+  card.querySelector('.element__text').textContent = name;
+  card.querySelector('.element__image').src = link;
+  setEventListeners(card)
+  elementsList.append(card)
+
+  return card
+}
+
+function handleDelete (evt) {
+  const trash = evt.target.closest('.element')
+  trash.remove()
+}
+
+function setEventListeners (card) {
+  card.querySelector('.element__delete').addEventListener('click', handleDelete);
+}
+
+
+
+
+//initialCards.forEach(element => elementsItem.prepend(createCard(element.link, element.name)));
 
 
 
 // слушатели
-editButton.addEventListener('click', popupOpened);
+/* editButton.addEventListener('click', popupOpened);
 closeButton.addEventListener('click', popupClosed);
 userData.addEventListener('submit', handleFormSubmit)
-
-
-
+ */
