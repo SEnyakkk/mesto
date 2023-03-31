@@ -13,7 +13,7 @@
 @import url(../blocks/popup/__figure-popup/popup__figure-popup.css);
 @import url(../blocks/popup/__figure-image/popup__figure-image.css);
 @import url(../blocks/popup/__figure-caption/popup__figure-caption.css);
-@import url(../blocks/popup/__zoom/popup_zoom.css);
+@import url(../blocks/popup/_zoom/popup_zoom.css);
 
 /* блок формы */
 @import url(../blocks/form/form.css);
