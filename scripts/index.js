@@ -27,15 +27,15 @@ const initialCards = [
 
 
  // попап для профиля
- const editButton = document.querySelector('.profile__edit-button');
- const popupProfile = document.querySelector('.profile-popup');
- const closeButton = popupProfile.querySelector('.popup__close-button');
- const profileInfo = document.querySelector('.profile__info');
- const infoTitle = profileInfo.querySelector('.profile__info-title');
- const infoSubtitle = profileInfo.querySelector('.profile__info-subtitle');
- const userData = popupProfile.querySelector('.form');
- const inputTitle = userData.querySelector('.form__data_user_name');
- const inputSubtitle = userData.querySelector('.form__data_user_job');
+const editButton = document.querySelector('.profile__edit-button');
+const popupProfile = document.querySelector('.profile-popup');
+const closeButton = popupProfile.querySelector('.popup__close-button');
+const profileInfo = document.querySelector('.profile__info');
+const infoTitle = profileInfo.querySelector('.profile__info-title');
+const infoSubtitle = profileInfo.querySelector('.profile__info-subtitle');
+const userData = popupProfile.querySelector('.form');
+const inputTitle = userData.querySelector('.form__data_user_name');
+const inputSubtitle = userData.querySelector('.form__data_user_job');
 
  const popupOpened = function () {
    popupProfile.classList.add('popup_opened');
@@ -111,7 +111,7 @@ function handleLike (evt) {
 //увеличить элемент
 function handleZoom (evt) {
   const cardImage = evt.target.closest('.element__image');
-  const popupZoom = document.querySelector('.zoom-popup');
+  const popupZoom = document.querySelector('.popup__zoom');
   popupZoom.classList.add('popup_opened');
   const zoomImage = popupZoom.querySelector('.popup__figure-image');
   const zoomText = popupZoom.querySelector('.popup__figure-caption');
@@ -127,11 +127,7 @@ function handleZoom (evt) {
   closeZoomButton.addEventListener('click', popupZoomClosed);
 };
 
-// const closeZoomButton = document.querySelector('.popup__close-button');
 
-//  const popupZoomClosed = function () {
-//     popupZoom.classList.remove('popup_opened');
-//  };
 
 
 function setEventListeners (card) {
@@ -142,7 +138,6 @@ function setEventListeners (card) {
 
 
 // слушатели
-//closeZoomButton.addEventListener('click', popupZoomClosed);
 addButton.addEventListener('click', popupElOpened);
 closeElButton.addEventListener('click', popupElClosed);
 editButton.addEventListener('click', popupOpened);
