@@ -111,7 +111,7 @@ function handleLike (evt) {
 //увеличить элемент
 function handleZoom (evt) {
   const cardImage = evt.target.closest('.element__image');
-  const popupZoom = document.querySelector('.popup__zoom');
+  const popupZoom = document.querySelector('.popup_zoom');
   popupZoom.classList.add('popup_opened');
   const zoomImage = popupZoom.querySelector('.popup__figure-image');
   const zoomText = popupZoom.querySelector('.popup__figure-caption');
