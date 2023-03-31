@@ -83,8 +83,6 @@ const handleElFormSubmit = function (evt) {
 
 
 //отрисовква элементов
-initialCards.forEach(card => (createCard(card.name, card.link)));
-
 function createCard (name, link) {
   const elementTemplate = document.querySelector('.element-template').content;
   const card = elementTemplate.querySelector('.element').cloneNode(true);
@@ -92,10 +90,11 @@ function createCard (name, link) {
   card.querySelector('.element__text').textContent = name;
   cardImage.src = link;
   cardImage.alt = name;
-  setEventListeners(card)
-  elementsList.append(card)
+  setEventListeners(card);
+  elementsList.append(card);
   return card
 }
+initialCards.forEach(card => (createCard(card.name, card.link)));
 
 //удаление елемента
 function handleDelete (evt) {
@@ -109,17 +108,44 @@ function handleLike (evt) {
   like.classList.toggle('element__group_active');
 }
 
+//увеличить элемент
+function handleZoom (evt) {
+  const cardImage = evt.target.closest('.element__image');
+  const popupZoom = document.querySelector('.zoom-popup');
+  popupZoom.classList.add('popup_opened');
+  const zoomImage = popupZoom.querySelector('.popup__figure-image');
+  const zoomText = popupZoom.querySelector('.popup__figure-caption');
+  zoomImage.src = cardImage.src;
+  zoomImage.alt = cardImage.alt;
+  zoomText.textContent = cardImage.alt;
+  const closeZoomButton = popupZoom.querySelector('.popup__close-button');
+
+  const popupZoomClosed = function () {
+    popupZoom.classList.remove('popup_opened');
+ };
+
+  closeZoomButton.addEventListener('click', popupZoomClosed);
+};
+
+// const closeZoomButton = document.querySelector('.popup__close-button');
+
+//  const popupZoomClosed = function () {
+//     popupZoom.classList.remove('popup_opened');
+//  };
+
+
 function setEventListeners (card) {
   card.querySelector('.element__delete').addEventListener('click', handleDelete);
   card.querySelector('.element__group').addEventListener('click', handleLike);
+  card.querySelector('.element__image').addEventListener('click', handleZoom);
 }
 
 
-
 // слушатели
+//closeZoomButton.addEventListener('click', popupZoomClosed);
 addButton.addEventListener('click', popupElOpened);
 closeElButton.addEventListener('click', popupElClosed);
 editButton.addEventListener('click', popupOpened);
 closeButton.addEventListener('click', popupClosed);
-userData.addEventListener('submit', handleFormSubmit)
-userPlace.addEventListener('submit', handleElFormSubmit)
+userData.addEventListener('submit', handleFormSubmit);
+userPlace.addEventListener('submit', handleElFormSubmit);
