@@ -61,10 +61,12 @@ const closeElButton = popupElement.querySelector('.popup__close-button');
 const userPlace = popupElement.querySelector('.form');
 const inputPlace = userPlace.querySelector('.form__data_user_place');
 const inputUrl = userPlace.querySelector('.form__data_user_url');
+const elementsList = document.querySelector('.elements__list');
 
 const popupElOpened = function () {
   popupElement.classList.add('popup_opened');
-
+  inputPlace.value = '';
+  inputUrl.value = '';
 };
 
 const popupElClosed = function () {
@@ -80,15 +82,11 @@ const handleElFormSubmit = function (evt) {
 }
 
 
-//галерея при открытии страницы
-const elementTemplate = document.querySelector('.element-template').content;
-const elementsList = document.querySelector('.elements__list');
-const elementDelete = elementTemplate.querySelector('.element__delete')
-
 //отрисовква элементов
 initialCards.forEach(card => (createCard(card.name, card.link)));
 
 function createCard (name, link) {
+  const elementTemplate = document.querySelector('.element-template').content;
   const card = elementTemplate.querySelector('.element').cloneNode(true);
   const cardImage = card.querySelector('.element__image');
   card.querySelector('.element__text').textContent = name;
@@ -99,13 +97,21 @@ function createCard (name, link) {
   return card
 }
 
+//удаление елемента
 function handleDelete (evt) {
-  const trash = evt.target.closest('.element')
+  const trash = evt.target.closest('.element');
   trash.remove()
+}
+
+//отметить элемент
+function handleLike (evt) {
+  const like = evt.target.closest('.element__group');
+  like.classList.toggle('element__group_active');
 }
 
 function setEventListeners (card) {
   card.querySelector('.element__delete').addEventListener('click', handleDelete);
+  card.querySelector('.element__group').addEventListener('click', handleLike);
 }
 
 
