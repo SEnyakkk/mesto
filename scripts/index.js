@@ -84,8 +84,7 @@ function handleFormSubmit(evt) {
 
 function addElement() {
   openPopup(popupElement);
-  inputPlace.value = ''; // inputPlace.value.reset();  ни inputPlace.reset(); не сработали! O
-  inputUrl.value = '';
+  userPlace.reset();
 };
 
 const handleElFormSubmit = function (evt) {
