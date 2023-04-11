@@ -49,7 +49,7 @@
       </section>
     </main>
     <footer class="footer">
-      <p class="footer__copyright">© 2023 Mesto Russia</p>
+      <p class="footer__copyright">© 2023 Арсентий Огарь</p>
     </footer>
      <div class="popup profile-popup">
       <div class="popup__container">
@@ -57,17 +57,19 @@
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="form" name="profile-editform">
           <input
-            type="text"
+            type="text" minlength="2" maxlength="40" required
             class="form__data form__data_user_name"
             name="username"
             placeholder="Ведите имя"
           />
+          <span class="popup__invalid popup__invalid_username"></span>
           <input
-            type="text"
+            type="text" minlength="2" maxlength="200" required
             class="form__data form__data_user_job"
             name="userjob"
             placeholder="О себе"
           />
+          <span class="popup__invalid popup__invalid_userjob"></span>
           <!-- form__data_user_name и form__data_user_job классы для определения в JS-->
           <input type="submit" class="form__save" value="Сохранить" />
         </form>
@@ -79,17 +81,20 @@
         <h2 class="popup__title">Новое место</h2>
         <form class="form" name="place-editform">
           <input
-            type="text"
+            type="text" maxlength="30" minlength="2" required
             class="form__data form__data_user_place"
             name="userplace"
             placeholder="Название"
           />
+          <span class="popup__invalid popup__invalid_userplace"></span>
           <input
-            type="text"
+            type="url" required
             class="form__data form__data_user_url"
             name="userurl"
             placeholder="Ссылка на картинку"
           />
+          <span class="popup__invalid popup__invalid_userurl"></span>
+
           <!-- form__data_user_place и form__data_user_url классы для определения в JS-->
           <input type="submit" class="form__save" value="Создать" />
         </form>
