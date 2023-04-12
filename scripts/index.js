@@ -57,21 +57,30 @@ closeButtons.forEach((button) => {
   button.addEventListener('click', () => closePopup(popup));
 });
 
-
 //открыть все
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  popup.addEventListener('click', (evt) => closePopupOverlay(evt));
+  popup.addEventListener('mousedown', closePopupOverlay);
+  document.addEventListener('keydown', closePopupEsc);
 };
 
 //закрыть все
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  popup.removeEventListener('mousedown', closePopupOverlay);
+  document.removeEventListener('keydown', closePopupEsc);
 };
 
 function closePopupOverlay (evt) {
   if (evt.target === evt.currentTarget) {
-    closePopup(evt.target)
+    closePopup(evt.target);
+  };
+};
+
+function closePopupEsc(evt) {
+   if (evt.keyCode === 27) {
+    const activPopup = document.querySelector('.popup_opened');
+    closePopup(activPopup);
   };
 };
 
