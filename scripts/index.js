@@ -57,15 +57,31 @@ closeButtons.forEach((button) => {
   button.addEventListener('click', () => closePopup(popup));
 });
 
-
 //открыть все
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-}
+  popup.addEventListener('mousedown', closePopupOverlay);
+  document.addEventListener('keydown', closePopupEsc);
+};
 
 //закрыть все
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  popup.removeEventListener('mousedown', closePopupOverlay);
+  document.removeEventListener('keydown', closePopupEsc);
+};
+
+function closePopupOverlay (evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.target);
+  };
+};
+
+function closePopupEsc(evt) {
+   if (evt.keyCode === 27) {
+    const activPopup = document.querySelector('.popup_opened');
+    closePopup(activPopup);
+  };
 };
 
 
@@ -80,7 +96,7 @@ function handleFormSubmit(evt) {
   infoTitle.textContent = inputTitle.value;
   infoSubtitle.textContent = inputSubtitle.value;
   closePopup(popupProfile);
-}
+};
 
 function addElement() {
   openPopup(popupElement);
@@ -93,7 +109,7 @@ const handleElFormSubmit = function (evt) {
   url = inputUrl.value;
   elementsList.prepend(createCard (place, url));
   closePopup(popupElement);
-}
+};
 
 
 //отрисовква элементов
@@ -105,7 +121,7 @@ function createCard (name, link) {
   cardImage.alt = name;
   setEventListeners(card);
   return card
-}
+};
 
 initialCards.forEach(card => elementsList.prepend(createCard(card.name, card.link)));
 
@@ -114,13 +130,13 @@ initialCards.forEach(card => elementsList.prepend(createCard(card.name, card.lin
 function handleDelete (evt) {
   const trash = evt.target.closest('.element');
   trash.remove();
-}
+};
 
 //отметить элемент
 function handleLike (evt) {
   const like = evt.target.closest('.element__group');
   like.classList.toggle('element__group_active');
-}
+};
 
 //увеличить элемент
 function handleZoom (evt) {
@@ -135,7 +151,7 @@ function setEventListeners (card) {
   card.querySelector('.element__delete').addEventListener('click', handleDelete);
   card.querySelector('.element__group').addEventListener('click', handleLike);
   card.querySelector('.element__image').addEventListener('click', handleZoom);
-}
+};
 
 
 // слушатели
@@ -143,3 +159,6 @@ addButton.addEventListener('click', addElement);
 editButton.addEventListener('click', editProfile);
 userData.addEventListener('submit', handleFormSubmit);
 userPlace.addEventListener('submit', handleElFormSubmit);
+// popupProfile.addEventListener('click', (evt) => closePopupOverlay(evt));
+// popupElement.addEventListener('click', (evt) => closePopupOverlay(evt));
+// popupZoom.addEventListener('click', (evt) => closePopupOverlay(evt));

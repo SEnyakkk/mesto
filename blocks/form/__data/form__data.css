@@ -3,7 +3,7 @@
   height: 27px;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 30px;
+  margin-bottom: 0;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -11,7 +11,7 @@
 
 @media screen and (max-width: 634px) {
   .form__data {
-    margin-bottom: 26px;
+    margin-bottom: 0;
     width: 238px;
   }
 }
