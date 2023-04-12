@@ -14,11 +14,14 @@
 @import url(../blocks/popup/__figure-image/popup__figure-image.css);
 @import url(../blocks/popup/__figure-caption/popup__figure-caption.css);
 @import url(../blocks/popup/_zoom/popup_zoom.css);
-
+@import url(../blocks/popup/__invalid/popup__invalid.css);
+@import url(../blocks/popup/__invalid/_visible/popup__invalid_visible.css);
 /* блок формы */
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__data/form__data.css);
+@import url(../blocks/form/__data/_invalid/form__data_invalid.css);
 @import url(../blocks/form/__save/form__save.css);
+@import url(../blocks/form/__save/_disabled/form__save_disabled.css);
 
 /* блок header */
 @import url(../blocks/header/header.css);

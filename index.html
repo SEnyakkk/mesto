@@ -75,28 +75,27 @@
         </form>
       </div>
     </div>
-    <div class="popup element-popup">
+    <div class="popup element-popup popup_opened"> <!--убрать класс-->
       <div class="popup__container">
         <button class="popup__close-button" type="button"></button>
         <h2 class="popup__title">Новое место</h2>
         <form class="form" name="place-editform">
           <input
             type="text" maxlength="30" minlength="2" required
-            class="form__data form__data_user_place"
+            class="form__data form__data_invalid form__data_user_place"
             name="userplace"
             placeholder="Название"
           />
-          <span class="popup__invalid popup__invalid_userplace"></span>
+          <span class="popup__invalid popup__invalid_visible popup__invalid_userplace">китекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибки</span>
           <input
             type="url" required
-            class="form__data form__data_user_url"
+            class="form__data form__data_invalid form__data_user_url"
             name="userurl"
             placeholder="Ссылка на картинку"
           />
-          <span class="popup__invalid popup__invalid_userurl"></span>
-
+          <span class="popup__invalid popup__invalid_visible popup__invalid_userurl">текст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибки</span>
           <!-- form__data_user_place и form__data_user_url классы для определения в JS-->
-          <input type="submit" class="form__save" value="Создать" />
+          <input type="submit" class="form__save form__save_disabled" value="Создать" /> <!--убрать класс-->
         </form>
       </div>
     </div>
