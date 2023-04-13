@@ -55,7 +55,7 @@
       <div class="popup__container">
         <button class="popup__close-button" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="form" name="profile-editform">
+        <form class="form" name="profile-editform" novalidate>
           <input
             type="text" minlength="2" maxlength="40" required
             class="form__data form__data_user_name"
@@ -75,27 +75,27 @@
         </form>
       </div>
     </div>
-    <div class="popup element-popup popup_opened"> <!--убрать класс-->
+    <div class="popup element-popup">
       <div class="popup__container">
         <button class="popup__close-button" type="button"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form class="form" name="place-editform">
+        <form class="form" name="place-editform" novalidate>
           <input
             type="text" maxlength="30" minlength="2" required
-            class="form__data form__data_invalid form__data_user_place"
+            class="form__data form__data_user_place "
             name="userplace"
             placeholder="Название"
           />
-          <span class="popup__invalid popup__invalid_visible popup__invalid_userplace">китекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибки</span>
+          <span class=" popup__invalid popup__invalid_userplace "></span>
           <input
             type="url" required
-            class="form__data form__data_invalid form__data_user_url"
+            class="form__data form__data_user_url "
             name="userurl"
             placeholder="Ссылка на картинку"
           />
-          <span class="popup__invalid popup__invalid_visible popup__invalid_userurl">текст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибкитекст ошибки</span>
+          <span class=" popup__invalid popup__invalid_userurl "></span>
           <!-- form__data_user_place и form__data_user_url классы для определения в JS-->
-          <input type="submit" class="form__save form__save_disabled" value="Создать" /> <!--убрать класс-->
+          <input type="submit" class="form__save " value="Создать" />
         </form>
       </div>
     </div>
@@ -106,6 +106,7 @@
         <figcaption class="popup__figure-caption"></figcaption>
       </figure>
     </div>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
