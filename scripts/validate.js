@@ -23,26 +23,44 @@ function setEventListeners(inputList, button, inputErrorTemplate, inactiveButton
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
       checkInput(input, inputErrorTemplate, inputErrorClass, errorClass);
+      toggleButton(inputList, button, inactiveButtonClass)
      });
   });
 };
-
+// скрыть ошибки
 function hideInputError(input, errorText, inputErrorClass, errorClass) {
   input.classList.remove(inputErrorClass);
   errorText.textContent = '';
   errorText.classList.remove(errorClass);
 };
-
+// показать ошибки
 function showInputError(input, errorText, inputErrorClass, errorClass) {
   input.classList.add(inputErrorClass);
   errorText.textContent = input.validationMessage;
   errorText.classList.add(errorClass);
 };
 
-// проверка валидности
+// проверка валидности для отображения ошибки
 function checkInput(input, inputErrorTemplate, inputErrorClass, errorClass) {
  const errorText = document.querySelector(`${inputErrorTemplate}${input.name}`);
  input.validity.valid ? hideInputError(input, errorText, inputErrorClass, errorClass) : showInputError(input, errorText, inputErrorClass, errorClass);
 };
+// включить кнопку
+function enableButton(button, inactiveButtonClass) {
+  button.classList.remove(inactiveButtonClass);
+  button.disabled = false;
+};
+// выключить кнопку
+function disableButton(button, inactiveButtonClass) {
+  button.classList.add(inactiveButtonClass);
+  button.disabled = true;
+}
+// проверка валидности для отображения кнопкой
+function inputValid(inputList) {
+  return Array.from(inputList).every((input) => input.validity.valid);
+};
 
-
+// переключение кнопки
+function toggleButton(inputList, button, inactiveButtonClass) {
+  inputValid(inputList) ? enableButton(button, inactiveButtonClass) : disableButton(button, inactiveButtonClass)
+};
