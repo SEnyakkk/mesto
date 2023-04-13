@@ -159,6 +159,3 @@ addButton.addEventListener('click', addElement);
 editButton.addEventListener('click', editProfile);
 userData.addEventListener('submit', handleFormSubmit);
 userPlace.addEventListener('submit', handleElFormSubmit);
-// popupProfile.addEventListener('click', (evt) => closePopupOverlay(evt));
-// popupElement.addEventListener('click', (evt) => closePopupOverlay(evt));
-// popupZoom.addEventListener('click', (evt) => closePopupOverlay(evt));
