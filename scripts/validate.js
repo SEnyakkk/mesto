@@ -16,6 +16,7 @@ function enableValidation(config) {
     const inputList = form.querySelectorAll(config.inputSelector);
     const button = form.querySelector(config.submitButtonSelector);
     setEventListeners(inputList, button, config.inputErrorTemplate, config.inactiveButtonClass, config.inputErrorClass, config.errorClass);
+    toggleButton(inputList, button, config.inactiveButtonClass)
   });
 };
 
@@ -55,12 +56,12 @@ function disableButton(button, inactiveButtonClass) {
   button.classList.add(inactiveButtonClass);
   button.disabled = true;
 }
-// проверка валидности для отображения кнопкой
+// проверка валидности для отображения кнопки
 function inputValid(inputList) {
   return Array.from(inputList).every((input) => input.validity.valid);
 };
 
 // переключение кнопки
 function toggleButton(inputList, button, inactiveButtonClass) {
-  inputValid(inputList) ? enableButton(button, inactiveButtonClass) : disableButton(button, inactiveButtonClass)
+  inputValid(inputList) ? enableButton(button, inactiveButtonClass) : disableButton(button, inactiveButtonClass);
 };
