@@ -1,33 +1,5 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-
  // попап для профиля
-const editButton = document.querySelector('.profile__edit-button');
+const profileEditButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.profile-popup');
 const profileInfo = document.querySelector('.profile__info');
 const infoTitle = profileInfo.querySelector('.profile__info-title');
@@ -36,7 +8,7 @@ const userData = popupProfile.querySelector('.form');
 const inputTitle = userData.querySelector('.form__data_user_name');
 const inputSubtitle = userData.querySelector('.form__data_user_job');
 //попап для галереи
-const addButton = document.querySelector('.profile__add-button');
+const elementAddButton = document.querySelector('.profile__add-button');
 const popupElement = document.querySelector('.element-popup');
 const userPlace = popupElement.querySelector('.form');
 const inputPlace = userPlace.querySelector('.form__data_user_place');
@@ -51,6 +23,7 @@ const popupZoom = document.querySelector('.popup_zoom');
 const zoomImage = popupZoom.querySelector('.popup__figure-image');
 const zoomText = popupZoom.querySelector('.popup__figure-caption');
 const closeButtons = document.querySelectorAll('.popup__close-button');
+const placeSubmitButton = userPlace.querySelector('.form__save')
 
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
@@ -78,7 +51,8 @@ function closePopupOverlay (evt) {
 };
 
 function closePopupEsc(evt) {
-   if (evt.keyCode === 27) {
+  const key = evt.key;
+   if (key === 'Escape') {
     const activPopup = document.querySelector('.popup_opened');
     closePopup(activPopup);
   };
@@ -91,7 +65,7 @@ function editProfile() {
   inputSubtitle.value = infoSubtitle.textContent;
 };
 
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   infoTitle.textContent = inputTitle.value;
   infoSubtitle.textContent = inputSubtitle.value;
@@ -103,12 +77,13 @@ function addElement() {
   userPlace.reset();
 };
 
-const handleElFormSubmit = function (evt) {
+const handleElementFormSubmit = function (evt) {
   evt.preventDefault();
-  place = inputPlace.value;
-  url = inputUrl.value;
+  const place = inputPlace.value;
+  const url = inputUrl.value;
   elementsList.prepend(createCard (place, url));
   closePopup(popupElement);
+  disableButton(placeSubmitButton, 'form__save_disabled')
 };
 
 
@@ -124,7 +99,6 @@ function createCard (name, link) {
 };
 
 initialCards.forEach(card => elementsList.prepend(createCard(card.name, card.link)));
-
 
 //удаление елемента
 function handleDelete (evt) {
@@ -153,9 +127,8 @@ function setEventListeners (card) {
   card.querySelector('.element__image').addEventListener('click', handleZoom);
 };
 
-
 // слушатели
-addButton.addEventListener('click', addElement);
-editButton.addEventListener('click', editProfile);
-userData.addEventListener('submit', handleFormSubmit);
-userPlace.addEventListener('submit', handleElFormSubmit);
+elementAddButton.addEventListener('click', addElement);
+profileEditButton.addEventListener('click', editProfile);
+userData.addEventListener('submit', handleProfileFormSubmit);
+userPlace.addEventListener('submit', handleElementFormSubmit);
