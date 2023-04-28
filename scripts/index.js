@@ -15,7 +15,7 @@ const inputPlace = userPlace.querySelector('.form__data_user_place');
 const inputUrl = userPlace.querySelector('.form__data_user_url');
 const elementsList = document.querySelector('.elements__list');
 //template
-const elementTemplate = '.element-template';
+const templateSelector = '.element-template';
 // const elementTemplate = document.querySelector('.element-template').content;
 // const card = elementTemplate.querySelector('.element');
 // const cardText = card.querySelector('.element__text');
@@ -27,15 +27,16 @@ const closeButtons = document.querySelectorAll('.popup__close-button');
 const placeSubmitButton = userPlace.querySelector('.form__save')
 const cl = console.log
 
+//класс создания карточек
 class Card {
-  constructor(link, name, elementTemplate) {
-    this._link = link;
-    this._name = name;
-    this._elementTemplate = elementTemplate;
+  constructor(data, templateSelector) {
+    this._link = data.link;
+    this._name = data.name;
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate() {
-    const cdElement = document.querySelector(this._elementTemplate).content.querySelector('.element').cloneNode(true);
+    const cdElement = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
     return cdElement;
   }
 
@@ -47,20 +48,68 @@ class Card {
     this._groupElement = this._cardElement.querySelector('.element__group');
     this._imageElement.src = this._link;
     this._imageElement.alt = this._name;
+    this._setEventListeners()
     return this._cardElement;
+  }
+
+  //удаление елемента
+  _handleDelete() {
+    this._cardElement.remove();
+  };
+
+  //отметить элемент
+  _handleLike() {
+    this._groupElement.classList.toggle('element__group_active');
+  };
+
+  //увеличить элемент
+  _handleZoom () {
+    zoomImage.src = this._link;
+    zoomImage.alt = this._name;
+    zoomText.textContent = this._name;
+    openPopup(popupZoom);
+  }
+  //слушатели кнопок и открытия элемента
+  _setEventListeners (card) {
+    this._deleteElement.addEventListener('click', () => {this._handleDelete();});
+    this._groupElement.addEventListener('click', () => {this._handleLike();});
+    this._imageElement.addEventListener('click', () => {this._handleZoom();});
   }
 
 }
 
 initialCards.forEach((item) => {
-  const card = new Card(item.link, item.name, elementTemplate);
-  // const cardElement = card.createCard();
+  const card = new Card(item, templateSelector);
   elementsList.append(card.createCard());
-
-  cl(card)
 })
 
+//удаление елемента
+// function handleDelete (evt) {
+//   const trash = evt.target.closest('.element');
+//   trash.remove();
+// };
 
+//отметить элемент
+// function handleLike (evt) {
+//   const like = evt.target.closest('.element__group');
+//   like.classList.toggle('element__group_active');
+// };
+
+//увеличить элемент
+// function handleZoom (evt) {
+//   const cardImage = evt.target.closest('.element__image');
+//   openPopup(popupZoom);
+//   zoomImage.src = cardImage.src;
+//   zoomImage.alt = cardImage.alt;
+//   zoomText.textContent = cardImage.alt;
+// };
+
+//открыть все
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  popup.addEventListener('mousedown', closePopupOverlay);
+  document.addEventListener('keydown', closePopupEsc);
+};
 
 //отрисовква элементов
 // function createCard (name, link) {
@@ -85,21 +134,11 @@ const handleElementFormSubmit = function (evt) {
 };
 
 
-
-
-
-
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
 
-//открыть все
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  popup.addEventListener('mousedown', closePopupOverlay);
-  document.addEventListener('keydown', closePopupEsc);
-};
 
 //закрыть все
 function closePopup(popup) {
@@ -144,26 +183,10 @@ function addElement() {
 
 
 
-//удаление елемента
-function handleDelete (evt) {
-  const trash = evt.target.closest('.element');
-  trash.remove();
-};
 
-//отметить элемент
-function handleLike (evt) {
-  const like = evt.target.closest('.element__group');
-  like.classList.toggle('element__group_active');
-};
 
-//увеличить элемент
-function handleZoom (evt) {
-  const cardImage = evt.target.closest('.element__image');
-  openPopup(popupZoom);
-  zoomImage.src = cardImage.src;
-  zoomImage.alt = cardImage.alt;
-  zoomText.textContent = cardImage.alt;
-};
+
+
 
 function setEventListeners (card) {
   card.querySelector('.element__delete').addEventListener('click', handleDelete);
