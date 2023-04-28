@@ -15,15 +15,79 @@ const inputPlace = userPlace.querySelector('.form__data_user_place');
 const inputUrl = userPlace.querySelector('.form__data_user_url');
 const elementsList = document.querySelector('.elements__list');
 //template
-const elementTemplate = document.querySelector('.element-template').content;
-const card = elementTemplate.querySelector('.element');
-const cardText = card.querySelector('.element__text');
+const elementTemplate = '.element-template';
+// const elementTemplate = document.querySelector('.element-template').content;
+// const card = elementTemplate.querySelector('.element');
+// const cardText = card.querySelector('.element__text');
 //попап картинки
 const popupZoom = document.querySelector('.popup_zoom');
 const zoomImage = popupZoom.querySelector('.popup__figure-image');
 const zoomText = popupZoom.querySelector('.popup__figure-caption');
 const closeButtons = document.querySelectorAll('.popup__close-button');
 const placeSubmitButton = userPlace.querySelector('.form__save')
+const cl = console.log
+
+class Card {
+  constructor(link, name, elementTemplate) {
+    this._link = link;
+    this._name = name;
+    this._elementTemplate = elementTemplate;
+  }
+
+  _getTemplate() {
+    const cdElement = document.querySelector(this._elementTemplate).content.querySelector('.element').cloneNode(true);
+    return cdElement;
+  }
+
+  createCard() {
+    this._cardElement = this._getTemplate();
+    this._deleteElement = this._cardElement.querySelector('.element__delete');
+    this._imageElement = this._cardElement.querySelector('.element__image');
+    this._textElement = this._cardElement.querySelector('.element__text');
+    this._groupElement = this._cardElement.querySelector('.element__group');
+    this._imageElement.src = this._link;
+    this._imageElement.alt = this._name;
+    return this._cardElement;
+  }
+
+}
+
+initialCards.forEach((item) => {
+  const card = new Card(item.link, item.name, elementTemplate);
+  // const cardElement = card.createCard();
+  elementsList.append(card.createCard());
+
+  cl(card)
+})
+
+
+
+//отрисовква элементов
+// function createCard (name, link) {
+//   const card = elementTemplate.querySelector('.element').cloneNode(true);
+//   const cardImage = card.querySelector('.element__image');
+//   card.querySelector('.element__text').textContent = name;
+//   cardImage.src = link;
+//   cardImage.alt = name;
+//   setEventListeners(card);
+//   return card
+// };
+
+// initialCards.forEach(card => elementsList.prepend(createCard(card.name, card.link)));
+
+const handleElementFormSubmit = function (evt) {
+  evt.preventDefault();
+  const place = inputPlace.value;
+  const url = inputUrl.value;
+  elementsList.prepend(createCard (place, url));
+  closePopup(popupElement);
+  disableButton(placeSubmitButton, 'form__save_disabled')
+};
+
+
+
+
+
 
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
@@ -77,28 +141,8 @@ function addElement() {
   userPlace.reset();
 };
 
-const handleElementFormSubmit = function (evt) {
-  evt.preventDefault();
-  const place = inputPlace.value;
-  const url = inputUrl.value;
-  elementsList.prepend(createCard (place, url));
-  closePopup(popupElement);
-  disableButton(placeSubmitButton, 'form__save_disabled')
-};
 
 
-//отрисовква элементов
-function createCard (name, link) {
-  const card = elementTemplate.querySelector('.element').cloneNode(true);
-  const cardImage = card.querySelector('.element__image');
-  card.querySelector('.element__text').textContent = name;
-  cardImage.src = link;
-  cardImage.alt = name;
-  setEventListeners(card);
-  return card
-};
-
-initialCards.forEach(card => elementsList.prepend(createCard(card.name, card.link)));
 
 //удаление елемента
 function handleDelete (evt) {
