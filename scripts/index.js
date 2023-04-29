@@ -1,5 +1,6 @@
 import {Card} from './Card.js'
 import {initialCards} from './initialCards.js'
+
 // попап для профиля
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.profile-popup');
@@ -27,56 +28,6 @@ const placeSubmitButton = userPlace.querySelector('.form__save')
 const cl = console.log
 
 
-// // //класс создания карточек
-// class Card {
-//   constructor(data, templateSelector, openZoomPopup) {
-//     this._link = data.link;
-//     this._name = data.name;
-//     this._templateSelector = templateSelector;
-//     this._openZoomPopup = openZoomPopup;
-//   }
-
-//   _getTemplate() {
-//     const cdElement = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
-//     return cdElement;
-//   }
-
-//   createCard() {
-//     this._cardElement = this._getTemplate();
-//     this._deleteElement = this._cardElement.querySelector('.element__delete');
-//     this._imageElement = this._cardElement.querySelector('.element__image');
-//     this._textElement = this._cardElement.querySelector('.element__text');
-//     this._groupElement = this._cardElement.querySelector('.element__group');
-//     this._imageElement.src = this._link;
-//     this._imageElement.alt = this._name;
-//     this._textElement.textContent = this._name;
-//     this._setEventListeners()
-//     return this._cardElement;
-//   }
-
-//   //удаление елемента
-//   _handleDelete() {
-//     this._cardElement.remove();
-//   };
-
-//   //отметить элемент
-//   _handleLike() {
-//     this._groupElement.classList.toggle('element__group_active');
-//   };
-
-//   //увеличить элемент
-//   _handleZoom() {
-//     this._openZoomPopup(this._link, this._name)
-//   }
-
-//   //слушатели кнопок и открытия элемента
-//   _setEventListeners(card) {
-//     this._deleteElement.addEventListener('click', () => {this._handleDelete();});
-//     this._groupElement.addEventListener('click', () => {this._handleLike();});
-//     this._imageElement.addEventListener('click', () => {this._handleZoom();});
-//   }
-// }
-
 //увеличить элемент
 function openZoomPopup(link, name) {
   zoomImage.src = link;
@@ -91,6 +42,7 @@ function openPopup(popup) {
   popup.addEventListener('mousedown', closePopupOverlay);
   document.addEventListener('keydown', closePopupEsc);
 };
+
 
 initialCards.forEach((item) => {
   const card = new Card(item, templateSelector, openZoomPopup);
@@ -112,13 +64,18 @@ initialCards.forEach((item) => {
 
 // initialCards.forEach(card => elementsList.prepend(createCard(card.name, card.link)));
 
+//вставить карточку пользователя
 const handleElementFormSubmit = function (evt) {
   evt.preventDefault();
-  const place = inputPlace.value;
-  const url = inputUrl.value;
-  elementsList.prepend(createCard (place, url));
+  const userPlaceValue = {
+    name : inputPlace.value,
+    link : inputUrl.value};
+  const card = new Card(userPlaceValue, templateSelector, openZoomPopup);
+  elementsList.prepend(card.createCard());
   closePopup(popupElement);
-  disableButton(placeSubmitButton, 'form__save_disabled')
+  // disableButton(placeSubmitButton, 'form__save_disabled')
+  placeSubmitButton.classList.add('form__save_disabled');
+  placeSubmitButton.disabled = true;
 };
 
 closeButtons.forEach((button) => {
@@ -164,12 +121,6 @@ function addElement() {
   openPopup(popupElement);
   userPlace.reset();
 };
-
-// function setEventListeners (card) {
-//   card.querySelector('.element__delete').addEventListener('click', handleDelete);
-//   card.querySelector('.element__group').addEventListener('click', handleLike);
-//   card.querySelector('.element__image').addEventListener('click', handleZoom);
-// };
 
 // слушатели
 elementAddButton.addEventListener('click', addElement);
