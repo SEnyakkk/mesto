@@ -1,5 +1,6 @@
 import {Card} from './Card.js'
 import {initialCards} from './initialCards.js'
+import {FormValidator} from './FormValidator.js'
 
 // попап для профиля
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -25,8 +26,18 @@ const zoomImage = popupZoom.querySelector('.popup__figure-image');
 const zoomText = popupZoom.querySelector('.popup__figure-caption');
 const closeButtons = document.querySelectorAll('.popup__close-button');
 const placeSubmitButton = userPlace.querySelector('.form__save')
+const validationConfig = {
+  inputSelector: '.form__data',
+  submitButtonSelector: '.form__save',
+  inputErrorTemplate: '.popup__invalid_',
+  inactiveButtonClass: 'form__save_disabled',
+  inputErrorClass: 'form__data_invalid',
+  errorClass: 'popup__invalid_visible'
+};
 const cl = console.log
 
+const userDataValidation = new FormValidator(validationConfig, userData);
+userDataValidation.enableValidation();
 
 //увеличить элемент
 function openZoomPopup(link, name) {
@@ -49,21 +60,6 @@ initialCards.forEach((item) => {
   elementsList.prepend(card.createCard());
 })
 
-
-
-//отрисовква элементов
-// function createCard (name, link) {
-//   const card = elementTemplate.querySelector('.element').cloneNode(true);
-//   const cardImage = card.querySelector('.element__image');
-//   card.querySelector('.element__text').textContent = name;
-//   cardImage.src = link;
-//   cardImage.alt = name;
-//   setEventListeners(card);
-//   return card
-// };
-
-// initialCards.forEach(card => elementsList.prepend(createCard(card.name, card.link)));
-
 //вставить карточку пользователя
 const handleElementFormSubmit = function (evt) {
   evt.preventDefault();
@@ -74,8 +70,6 @@ const handleElementFormSubmit = function (evt) {
   elementsList.prepend(card.createCard());
   closePopup(popupElement);
   // disableButton(placeSubmitButton, 'form__save_disabled')
-  placeSubmitButton.classList.add('form__save_disabled');
-  placeSubmitButton.disabled = true;
 };
 
 closeButtons.forEach((button) => {

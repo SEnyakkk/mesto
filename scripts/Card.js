@@ -1,4 +1,3 @@
-// //класс создания карточек
 export class Card {
   constructor(data, templateSelector, openZoomPopup) {
     this._link = data.link;
