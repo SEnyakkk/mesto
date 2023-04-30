@@ -16,7 +16,7 @@ export class Card {
     this._deleteElement = this._cardElement.querySelector('.element__delete');
     this._imageElement = this._cardElement.querySelector('.element__image');
     this._textElement = this._cardElement.querySelector('.element__text');
-    this._groupElement = this._cardElement.querySelector('.element__group');
+    this._likeButton = this._cardElement.querySelector('.element__group');
     this._imageElement.src = this._link;
     this._imageElement.alt = this._name;
     this._textElement.textContent = this._name;
@@ -31,7 +31,7 @@ export class Card {
 
   //отметить элемент
   _handleLike() {
-    this._groupElement.classList.toggle('element__group_active');
+    this._likeButton.classList.toggle('element__group_active');
   };
 
   //увеличить элемент
@@ -42,7 +42,7 @@ export class Card {
   //слушатели кнопок и открытия элемента
   _setEventListeners(card) {
     this._deleteElement.addEventListener('click', () => {this._handleDelete();});
-    this._groupElement.addEventListener('click', () => {this._handleLike();});
+    this._likeButton.addEventListener('click', () => {this._handleLike();});
     this._imageElement.addEventListener('click', () => {this._handleZoom();});
   }
 }
