@@ -39,6 +39,9 @@ const cl = console.log
 const userDataValidation = new FormValidator(validationConfig, userData);
 userDataValidation.enableValidation();
 
+const userPlaceValidation = new FormValidator(validationConfig, userPlace);
+userPlaceValidation.enableValidation();
+
 //увеличить элемент
 function openZoomPopup(link, name) {
   zoomImage.src = link;
@@ -69,7 +72,6 @@ const handleElementFormSubmit = function (evt) {
   const card = new Card(userPlaceValue, templateSelector, openZoomPopup);
   elementsList.prepend(card.createCard());
   closePopup(popupElement);
-  // disableButton(placeSubmitButton, 'form__save_disabled')
 };
 
 closeButtons.forEach((button) => {
