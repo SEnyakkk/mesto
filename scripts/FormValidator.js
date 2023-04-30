@@ -7,11 +7,6 @@ export class FormValidator {
     this._inputErrorClass = validationConfig.inputErrorClass;
     this._errorClass = validationConfig.errorClass;
     this._form = form;
-
-  }
-
-  _toggleButton() {
-    inputValid(inputList) ? enableButton(button, inactiveButtonClass) : disableButton(button, inactiveButtonClass);
   }
 
   _checkInput(input) {
@@ -30,11 +25,30 @@ export class FormValidator {
     errorText.textContent = input.validationMessage;
     errorText.classList.add(this._errorClass);
   }
+
+  _inputValid() {
+    return Array.from(this._inputList).every((input) => input.validity.valid);
+  }
+
+  _toggleButton() {
+    this._inputValid() ? this._enableButton() : this._disableButton(this._button);
+  }
+
+  _enableButton(button) {
+    this._button.classList.remove(this._inactiveButtonClass);
+    this._button.disabled = false;
+  };
+
+  _disableButton(button) {
+    button.classList.add(this._inactiveButtonClass);
+    button.disabled = true;
+  }
+
   _setEventListener(){
     this._inputList.forEach(input => {
       input.addEventListener('input', () => {
         this._checkInput(input)
-        // this._toggleButton()
+        this._toggleButton()
       })
     })
   }
@@ -43,7 +57,6 @@ export class FormValidator {
     this._inputList = this._form.querySelectorAll(this._inputSelector);
     this._button = this._form.querySelector(this._submitButtonSelector);
     this._setEventListener();
-    // this._toggleButton();
   }
 }
 

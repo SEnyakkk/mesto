@@ -103,7 +103,20 @@
 //   });
 // };
 
-
+// // включить кнопку
+// function enableButton(button, inactiveButtonClass) {
+//   button.classList.remove(inactiveButtonClass);
+//   button.disabled = false;
+// };
+// // выключить кнопку
+// function disableButton(button, inactiveButtonClass) {
+//   button.classList.add(inactiveButtonClass);
+//   button.disabled = true;
+// }
+// // проверка валидности для отображения кнопки
+// function inputValid(inputList) {
+//   return Array.from(inputList).every((input) => input.validity.valid);
+// };
 
 
 
