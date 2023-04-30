@@ -27,6 +27,7 @@ const zoomText = popupZoom.querySelector('.popup__figure-caption');
 const closeButtons = document.querySelectorAll('.popup__close-button');
 const placeSubmitButton = userPlace.querySelector('.form__save')
 const validationConfig = {
+  formSelector: '.form',
   inputSelector: '.form__data',
   submitButtonSelector: '.form__save',
   inputErrorTemplate: '.popup__invalid_',
@@ -34,13 +35,31 @@ const validationConfig = {
   inputErrorClass: 'form__data_invalid',
   errorClass: 'popup__invalid_visible'
 };
-const cl = console.log
 
 const userDataValidation = new FormValidator(validationConfig, userData);
 userDataValidation.enableValidation();
 
 const userPlaceValidation = new FormValidator(validationConfig, userPlace);
 userPlaceValidation.enableValidation();
+
+// const formValidators = {}
+
+// // Включение валидации
+// const enableValidation = (validationConfig) => {
+//   const formList = Array.from(document.querySelectorAll(validationConfig.formSelector))
+//   formList.forEach((formElement) => {
+//     const validator = new FormValidator(formElement, validationConfig)
+// // получаем данные из атрибута `name` у формы
+//     const formName = formElement.getAttribute('name')
+//     cl(validator)
+//    // вот тут в объект записываем под именем формы
+//     formValidators[formName] = validator;
+//     validator.enableValidation();
+//   });
+// };
+
+// enableValidation(validationConfig);
+
 
 //увеличить элемент
 function openZoomPopup(link, name) {
@@ -57,10 +76,16 @@ function openPopup(popup) {
   document.addEventListener('keydown', closePopupEsc);
 };
 
+function createNewCard(item) {
+  const card = new Card(item, templateSelector, openZoomPopup);
+  const cardElement = card.createCard();
+  return cardElement;
+
+}
 
 initialCards.forEach((item) => {
-  const card = new Card(item, templateSelector, openZoomPopup);
-  elementsList.prepend(card.createCard());
+  const card = createNewCard(item);
+  elementsList.prepend(card);
 })
 
 //вставить карточку пользователя
@@ -69,8 +94,8 @@ const handleElementFormSubmit = function (evt) {
   const userPlaceValue = {
     name : inputPlace.value,
     link : inputUrl.value};
-  const card = new Card(userPlaceValue, templateSelector, openZoomPopup);
-  elementsList.prepend(card.createCard());
+    const card = createNewCard(userPlaceValue);
+  elementsList.prepend(card);
   closePopup(popupElement);
 };
 
@@ -104,6 +129,7 @@ function editProfile() {
   openPopup(popupProfile);
   inputTitle.value = infoTitle.textContent;
   inputSubtitle.value = infoSubtitle.textContent;
+  userDataValidation.resetValidation()
 };
 
 function handleProfileFormSubmit(evt) {
@@ -116,6 +142,7 @@ function handleProfileFormSubmit(evt) {
 function addElement() {
   openPopup(popupElement);
   userPlace.reset();
+  userPlaceValidation.resetValidation()
 };
 
 // слушатели

@@ -7,31 +7,42 @@ export class FormValidator {
     this._inputErrorClass = validationConfig.inputErrorClass;
     this._errorClass = validationConfig.errorClass;
     this._form = form;
+    this._inputList = form.querySelectorAll(this._inputSelector);
+    this._button = form.querySelector(this._submitButtonSelector);
   }
 
-  _checkInput(input) {
-    const errorText = this._form.querySelector(`${this._inputErrorTemplate}${input.name}`);
-    input.validity.valid ? this._hideInputError(input, errorText) : this._showInputError(input, errorText);
+  _checkInput() {
+    this._errorText = this._form.querySelector(`${this._inputErrorTemplate}${this._input.name}`);
+    this._input.validity.valid ? this._hideInputError() : this._showInputError();
   }
 
-  _hideInputError(input, errorText) {
-    input.classList.remove(this._inputErrorClass);
-    errorText.textContent = '';
-    errorText.classList.remove(this._errorClass);
+  _hideInputError() {
+    this._input.classList.remove(this._inputErrorClass);
+    this._errorText.textContent = '';
+    this._errorText.classList.remove(this._errorClass);
   }
 
-  _showInputError(input, errorText) {
-    input.classList.add(this._inputErrorClass);
-    errorText.textContent = input.validationMessage;
-    errorText.classList.add(this._errorClass);
+  _showInputError() {
+    this._input.classList.add(this._inputErrorClass);
+    this._errorText.textContent = this._input.validationMessage;
+    this._errorText.classList.add(this._errorClass);
   }
 
   _inputValid() {
     return Array.from(this._inputList).every((input) => input.validity.valid);
   }
 
+  resetValidation() {
+    this._inputList.forEach((input) => {
+      this._input = input;
+      this._errorText = this._form.querySelector(`${this._inputErrorTemplate}${this._input.name}`);
+      this._hideInputError();
+      });
+    this._disableButton();
+  }
+
   _toggleButton() {
-    this._inputValid() ? this._enableButton() : this._disableButton(this._button);
+    this._inputValid() ? this._enableButton() : this._disableButton();
   }
 
   _enableButton() {
@@ -45,17 +56,18 @@ export class FormValidator {
   }
 
   _setEventListener(){
+    // this._toggleButton() //если перенести отключает полностью кнопки
     this._inputList.forEach(input => {
       input.addEventListener('input', () => {
-        this._checkInput(input)
+        this._input = input;
+        this._checkInput()
         this._toggleButton()
       })
     })
   }
 
   enableValidation() {
-    this._inputList = this._form.querySelectorAll(this._inputSelector);
-    this._button = this._form.querySelector(this._submitButtonSelector);
+
     this._setEventListener();
   }
 }
