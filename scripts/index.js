@@ -42,17 +42,16 @@ userDataValidation.enableValidation();
 const userPlaceValidation = new FormValidator(validationConfig, userPlace);
 userPlaceValidation.enableValidation();
 
-// const formValidators = {}
+// const formValidators = {} в таком виде, так и не заработало...
 
 // // Включение валидации
 // const enableValidation = (validationConfig) => {
-//   const formList = Array.from(document.querySelectorAll(validationConfig.formSelector))
+//   const formList = Array.from(document.forms)
 //   formList.forEach((formElement) => {
 //     const validator = new FormValidator(formElement, validationConfig)
-// // получаем данные из атрибута `name` у формы
+//     // получаем данные из атрибута `name` у формы
 //     const formName = formElement.getAttribute('name')
-//     cl(validator)
-//    // вот тут в объект записываем под именем формы
+//     // вот тут в объект записываем под именем формы
 //     formValidators[formName] = validator;
 //     validator.enableValidation();
 //   });
@@ -109,6 +108,9 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
   popup.removeEventListener('mousedown', closePopupOverlay);
   document.removeEventListener('keydown', closePopupEsc);
+  userPlaceValidation.resetValidation() // если сбрасывать ошибки при закрытии,
+  userDataValidation.resetValidation()  // спан с текстом ошибки не перекрывает собой интерактивные элементы
+
 };
 
 function closePopupOverlay (evt) {
@@ -129,7 +131,8 @@ function editProfile() {
   openPopup(popupProfile);
   inputTitle.value = infoTitle.textContent;
   inputSubtitle.value = infoSubtitle.textContent;
-  userDataValidation.resetValidation()
+  // userDataValidation.resetValidation()
+  // validator.userData.resetValidation()
 };
 
 function handleProfileFormSubmit(evt) {
@@ -142,7 +145,9 @@ function handleProfileFormSubmit(evt) {
 function addElement() {
   openPopup(popupElement);
   userPlace.reset();
-  userPlaceValidation.resetValidation()
+  // userPlaceValidation.resetValidation()
+  // validator.userPlace.resetValidation()
+
 };
 
 // слушатели
