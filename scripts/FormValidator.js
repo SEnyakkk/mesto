@@ -34,14 +34,14 @@ export class FormValidator {
     this._inputValid() ? this._enableButton() : this._disableButton(this._button);
   }
 
-  _enableButton(button) {
+  _enableButton() {
     this._button.classList.remove(this._inactiveButtonClass);
     this._button.disabled = false;
   };
 
-  _disableButton(button) {
-    button.classList.add(this._inactiveButtonClass);
-    button.disabled = true;
+  _disableButton() {
+    this._button.classList.add(this._inactiveButtonClass);
+    this._button.disabled = true;
   }
 
   _setEventListener(){
@@ -59,18 +59,3 @@ export class FormValidator {
     this._setEventListener();
   }
 }
-
-// // включить кнопку
-// function enableButton(button, inactiveButtonClass) {
-//   button.classList.remove(inactiveButtonClass);
-//   button.disabled = false;
-// };
-// // выключить кнопку
-// function disableButton(button, inactiveButtonClass) {
-//   button.classList.add(inactiveButtonClass);
-//   button.disabled = true;
-// }
-// // проверка валидности для отображения кнопки
-// function inputValid(inputList) {
-//   return Array.from(inputList).every((input) => input.validity.valid);
-// };
