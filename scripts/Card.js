@@ -7,8 +7,8 @@ export class Card {
   }
 
   _getTemplate() {
-    const cdElement = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
-    return cdElement;
+    const tempElement = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
+    return tempElement;
   }
 
   createCard() {
