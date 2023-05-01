@@ -56,7 +56,7 @@ export class FormValidator {
   }
 
   _setEventListener(){
-    // this._toggleButton() //если перенести отключает полностью кнопки
+    this._toggleButton()
     this._inputList.forEach(input => {
       input.addEventListener('input', () => {
         this._input = input;
