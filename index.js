@@ -3,6 +3,7 @@ import {initialCards} from './scripts/utils/initialCards.js'
 import {FormValidator} from './scripts/components/FormValidator.js'
 import {PopupWithImage} from './scripts/components/PopupWithImage.js'
 import { Section } from './scripts/components/Section.js'
+import { UserInfo } from './scripts/components/UserInfo.js'
 
 // попап для профиля
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -41,6 +42,12 @@ const validationConfig = {
 const popupProfSelector = '.profile-popup';
 const popupImageSelector = '.popup_zoom';
 const elementsListSelector = '.elements__list';
+const inputTitleSelector = '.form__data_user_name';
+const inputSubtitleSelector = '.form__data_user_job';
+
+const userInfo = new UserInfo(inputTitleSelector, inputSubtitleSelector)
+console.log(userInfo)
+
 const formValidators = {}
 const popupImage = new PopupWithImage(popupImageSelector)
 popupImage.setEventListener()
@@ -99,14 +106,7 @@ const handleElementFormSubmit = function (evt) {
   closePopup(popupElement);
 };
 
-function editProfile() {
-  // openPopup(popupProfile);
-  // profPopup.open();
-  inputTitle.value = infoTitle.textContent;
-  inputSubtitle.value = infoSubtitle.textContent;
-  // userDataValidation.resetValidation()
-  formValidators['profile-editform'].resetValidation()
-};
+
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -175,3 +175,12 @@ function addElement() {
 //   const card = createNewCard(item);
 //   elementsList.prepend(card);
 // })
+
+// function editProfile() {
+//   // openPopup(popupProfile);
+//   // profPopup.open();
+//   inputTitle.value = infoTitle.textContent;
+//   inputSubtitle.value = infoSubtitle.textContent;
+//   // userDataValidation.resetValidation()
+//   formValidators['profile-editform'].resetValidation()
+// };
