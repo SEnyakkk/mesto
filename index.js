@@ -2,6 +2,7 @@ import {Card} from './scripts/components/Card.js'
 import {initialCards} from './scripts/utils/initialCards.js'
 import {FormValidator} from './scripts/components/FormValidator.js'
 import {PopupWithImage} from './scripts/components/PopupWithImage.js'
+import { Section } from './scripts/components/Section.js'
 
 // попап для профиля
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -37,10 +38,10 @@ const validationConfig = {
   errorClass: 'popup__invalid_visible'
 };
 
-const popupProfSelector = '.profile-popup'
-const popupImageSelector = '.popup_zoom'
-
-
+const popupProfSelector = '.profile-popup';
+const popupImageSelector = '.popup_zoom';
+const elementsListSelector = '.elements__list';
+const formValidators = {}
 const popupImage = new PopupWithImage(popupImageSelector)
 popupImage.setEventListener()
 
@@ -54,7 +55,7 @@ popupImage.setEventListener()
 // const userPlaceValidation = new FormValidator(validationConfig, userPlace);
 // userPlaceValidation.enableValidation();
 
-const formValidators = {}
+
 
 // Включение валидации
 const enableValidation = (validationConfig) => {
@@ -69,26 +70,23 @@ const enableValidation = (validationConfig) => {
 
 enableValidation(validationConfig);
 
-
-//увеличить элемент
-// function openZoomPopup(link, name) {
-//   zoomImage.src = link;
-//   zoomImage.alt = name;
-//   zoomText.textContent = name;
-//   openPopup(popupZoom);
-// }
-
-
 function createNewCard(item) {
   const card = new Card(item, templateSelector, popupImage.open);
   const cardElement = card.createCard();
   return cardElement;
 }
 
-initialCards.forEach((item) => {
-  const card = createNewCard(item);
-  elementsList.prepend(card);
-})
+const section = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, templateSelector, popupImage.open);
+    return card.createCard();
+  }
+}, elementsListSelector)
+
+section.addCard()
+
+
 
 //вставить карточку пользователя
 const handleElementFormSubmit = function (evt) {
@@ -127,10 +125,10 @@ function addElement() {
 };
 
 // слушатели
-elementAddButton.addEventListener('click', addElement);
-profileEditButton.addEventListener('click', editProfile);
-userData.addEventListener('submit', handleProfileFormSubmit);
-userPlace.addEventListener('submit', handleElementFormSubmit);
+// elementAddButton.addEventListener('click', addElement);
+// profileEditButton.addEventListener('click', editProfile);
+// userData.addEventListener('submit', handleProfileFormSubmit);
+// userPlace.addEventListener('submit', handleElementFormSubmit);
 
 // closeButtons.forEach((button) => {
 //   const popup = button.closest('.popup');
@@ -164,3 +162,16 @@ userPlace.addEventListener('submit', handleElementFormSubmit);
 //   popup.addEventListener('mousedown', closePopupOverlay);
 //   document.addEventListener('keydown', closePopupEsc);
 // };
+
+//увеличить элемент
+// function openZoomPopup(link, name) {
+//   zoomImage.src = link;
+//   zoomImage.alt = name;
+//   zoomText.textContent = name;
+//   openPopup(popupZoom);
+// }
+
+// initialCards.forEach((item) => {
+//   const card = createNewCard(item);
+//   elementsList.prepend(card);
+// })
