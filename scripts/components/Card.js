@@ -1,7 +1,7 @@
 export class Card {
   constructor(data, templateSelector, openZoomPopup) {
-    this._link = data.link;
-    this._name = data.name;
+    this._link = data.userurl;
+    this._name = data.userplace;
     this._templateSelector = templateSelector;
     this._openZoomPopup = openZoomPopup;
   }
