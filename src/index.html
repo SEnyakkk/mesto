@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
+
     <title>Mesto</title>
   </head>
   <body class="page">
     <header class="header">
       <img
-        src="./images/mestologo.svg"
+        src="<%=require('./images/mestologo.svg')%>"
         alt="Места России"
         class="header__logo"
       />
@@ -19,7 +19,7 @@
       <section class="profile">
         <div class="profile__nav">
           <img
-            src="./images/profilephoto.jpg"
+            src="<%=require('./images/profilephoto.jpg')%>"
             alt="фото профиля"
             class="profile__avatar"
           />
@@ -106,6 +106,6 @@
         <figcaption class="popup__figure-caption"></figcaption>
       </figure>
     </div>
-    <script type="module" src="./index.js"></script>
+
   </body>
 </html>
