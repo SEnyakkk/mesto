@@ -4,31 +4,12 @@ import {FormValidator} from './scripts/components/FormValidator.js'
 import {PopupWithImage} from './scripts/components/PopupWithImage.js'
 import { Section } from './scripts/components/Section.js'
 import { UserInfo } from './scripts/components/UserInfo.js'
+import { PopupWithForm } from './scripts/components/PopupWithForm.js'
 
-// попап для профиля
 const profileEditButton = document.querySelector('.profile__edit-button');
-const popupProfile = document.querySelector('.profile-popup');
-const profileInfo = document.querySelector('.profile__info');
-const infoTitle = profileInfo.querySelector('.profile__info-title');
-const infoSubtitle = profileInfo.querySelector('.profile__info-subtitle');
-const userData = popupProfile.querySelector('.form');
-const inputTitle = userData.querySelector('.form__data_user_name');
-const inputSubtitle = userData.querySelector('.form__data_user_job');
-//попап для галереи
+
 const elementAddButton = document.querySelector('.profile__add-button');
-const popupElement = document.querySelector('.element-popup');
-const userPlace = popupElement.querySelector('.form');
-const inputPlace = userPlace.querySelector('.form__data_user_place');
-const inputUrl = userPlace.querySelector('.form__data_user_url');
-const elementsList = document.querySelector('.elements__list');
-//template
-const templateSelector = '.element-template';
-//попап картинки
-const popupZoom = document.querySelector('.popup_zoom');
-const zoomImage = popupZoom.querySelector('.popup__figure-image');
-const zoomText = popupZoom.querySelector('.popup__figure-caption');
-const closeButtons = document.querySelectorAll('.popup__close-button');
-const placeSubmitButton = userPlace.querySelector('.form__save')
+
 const validationConfig = {
   formSelector: '.form',
   inputSelector: '.form__data',
@@ -39,31 +20,39 @@ const validationConfig = {
   errorClass: 'popup__invalid_visible'
 };
 
+const templateSelector = '.element-template';
 const popupProfSelector = '.profile-popup';
+const popupElementSelector = '.element-popup';
 const popupImageSelector = '.popup_zoom';
 const elementsListSelector = '.elements__list';
-const inputTitleSelector = '.form__data_user_name';
-const inputSubtitleSelector = '.form__data_user_job';
+const inputTitleSelector = '.profile__info-title';
+const inputSubtitleSelector = '.profile__info-subtitle';
 
 const userInfo = new UserInfo(inputTitleSelector, inputSubtitleSelector)
-console.log(userInfo)
+
+const popupProfile = new PopupWithForm(popupProfSelector, (items) => {
+  userInfo.setUserInfo(items);
+});
+popupProfile.setEventListener();
+
+const popupElement = new PopupWithForm(popupElementSelector, (items) => {
+  section.addItem(items);
+});
+popupElement.setEventListener();
+
+const popupImage = new PopupWithImage(popupImageSelector)
+popupImage.setEventListener();
+
+const section = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, templateSelector, popupImage.open);
+    return card.createCard();
+  }
+}, elementsListSelector)
+section.addCard();
 
 const formValidators = {}
-const popupImage = new PopupWithImage(popupImageSelector)
-popupImage.setEventListener()
-
-// const profPopup = new Popup(popupProfSelector);
-// profPopup.setEventListener()
-
-
-// const userDataValidation = new FormValidator(validationConfig, userData);
-// userDataValidation.enableValidation();
-
-// const userPlaceValidation = new FormValidator(validationConfig, userPlace);
-// userPlaceValidation.enableValidation();
-
-
-
 // Включение валидации
 const enableValidation = (validationConfig) => {
   const formList = Array.from(document.forms)
@@ -74,59 +63,58 @@ const enableValidation = (validationConfig) => {
     validator.enableValidation();
   });
 };
-
 enableValidation(validationConfig);
 
-function createNewCard(item) {
-  const card = new Card(item, templateSelector, popupImage.open);
-  const cardElement = card.createCard();
-  return cardElement;
-}
+elementAddButton.addEventListener('click', () => {
+  formValidators['place-editform'].resetValidation()
+  popupElement.open()
+});
 
-const section = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = new Card(item, templateSelector, popupImage.open);
-    return card.createCard();
-  }
-}, elementsListSelector)
+profileEditButton.addEventListener('click', () => {
+  // popupProfile.setInputValues(userInfo.getUserInfo())
+  formValidators['profile-editform'].resetValidation()
+  popupProfile.open()
+});
 
-section.addCard()
-
-
+// function createNewCard(item) {
+//   const card = new Card(item, templateSelector, popupImage.open);
+//   const cardElement = card.createCard();
+//   return cardElement;
+// }
 
 //вставить карточку пользователя
-const handleElementFormSubmit = function (evt) {
-  evt.preventDefault();
-  const userPlaceValue = {
-    name : inputPlace.value,
-    link : inputUrl.value};
-    const card = createNewCard(userPlaceValue);
-  elementsList.prepend(card);
-  closePopup(popupElement);
-};
+// const handleElementFormSubmit = function (evt) {
+//   evt.preventDefault();
+//   const userPlaceValue = {
+//     name : inputPlace.value,
+//     link : inputUrl.value};
+//     const card = createNewCard(userPlaceValue);
+//   elementsList.prepend(card);
+//   closePopup(popupElement);
+// };
 
 
 
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  infoTitle.textContent = inputTitle.value;
-  infoSubtitle.textContent = inputSubtitle.value;
-  closePopup(popupProfile);
-};
+// function handleProfileFormSubmit(evt) {
+//   evt.preventDefault();
+//   infoTitle.textContent = inputTitle.value;
+//   infoSubtitle.textContent = inputSubtitle.value;
+//   closePopup(popupProfile);
+// };
 
-function addElement() {
-  profPopup.open();
+// function addElement() {
+  // profPopup.open();
   // openPopup(popupElement);
-  userPlace.reset();
+  // userPlace.reset();
   // userPlaceValidation.resetValidation()
-  formValidators['place-editform'].resetValidation()
-
-};
+  // formValidators['place-editform'].resetValidation()
+// };
 
 // слушатели
-// elementAddButton.addEventListener('click', addElement);
-// profileEditButton.addEventListener('click', editProfile);
+
+
+
+
 // userData.addEventListener('submit', handleProfileFormSubmit);
 // userPlace.addEventListener('submit', handleElementFormSubmit);
 

@@ -1,7 +1,7 @@
 export class UserInfo {
   constructor(inputTitleSelector, inputSubtitleSelector) {
-    this.inputTitleSelector = document.querySelector(inputTitleSelector);
-    this.inputSubtitleSelector = document.querySelector(inputSubtitleSelector);
+    this._inputTitleSelector = document.querySelector(inputTitleSelector);
+    this._inputSubtitleSelector = document.querySelector(inputSubtitleSelector);
   }
 
   getUserInfo() {
@@ -11,9 +11,9 @@ export class UserInfo {
     }
   }
 
-  setUserInfo(data) {
-    this._inputSubtitleSelector.textContent = data.username;
-    this._inputTitleSelector.textContent = data.userjob;
+  setUserInfo({username, userjob}) {
+    this._inputTitleSelector.textContent = username;
+    this._inputSubtitleSelector.textContent = userjob;
   }
 
 }

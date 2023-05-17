@@ -2,17 +2,17 @@ export class Section {
   constructor({ items, renderer }, templateSelector) {
     this._template = document.querySelector(templateSelector);
     this._initialCards = items
-    this.renderer = renderer
+    this._renderer = renderer
   }
 
   addCard() {
     this._initialCards.forEach(element => {
-      this.addItem(this.renderer(element))
+      this.addItem(element)
     });
   }
 
-  addItem(elementDom) {
-    this._template.prepend(elementDom)
+  addItem(element) {
+    this._template.prepend(this._renderer(element));
   }
 
 }
