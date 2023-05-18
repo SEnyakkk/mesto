@@ -42,7 +42,7 @@ popupProfile.setEventListener();
 
 //добавление карточек
 const popupElement = new PopupWithForm(popupElementSelector, (items) => {
-  section.addItem(items);
+  section.addItem(createNewCard(items));
 });
 popupElement.setEventListener();
 
@@ -50,15 +50,18 @@ popupElement.setEventListener();
 const popupImage = new PopupWithImage(popupImageSelector)
 popupImage.setEventListener();
 
+// Инстанцирование класса Card
+const createNewCard = (items) => {
+  const card = new Card(items, templateSelector, popupImage.open);
+  return card.createCard();
+}
+
 //секция для отрисовки карточек
 const section = new Section({
-  items: initialCards,
   renderer: (items) => {
-    const card = new Card(items, templateSelector, popupImage.open);
-    return card.createCard();
-  }
-}, elementsListSelector)
-section.addCard();
+    section.addItem(createNewCard(items));}
+  }, elementsListSelector)
+section.addCard(initialCards);
 
 const formValidators = {}
 // Включение валидации
