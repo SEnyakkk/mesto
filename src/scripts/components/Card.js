@@ -1,9 +1,10 @@
 export class Card {
-  constructor(data, templateSelector, openZoomPopup) {
+  constructor(data, templateSelector, openZoomPopup, openPopupDelet) {
     this._link = data.userurl;
     this._name = data.userplace;
     this._templateSelector = templateSelector;
     this._openZoomPopup = openZoomPopup;
+    this._openPopupDelet = openPopupDelet;
   }
 
   _getTemplate() {
@@ -26,8 +27,13 @@ export class Card {
 
   //удаление елемента
   _handleDelete() {
-    this._cardElement.remove();
+    // this._cardElement.remove();
+    this._openPopupDelet(this)
   };
+
+  deletCard() {
+    this._cardElement.remove();
+  }
 
   //отметить элемент
   _handleLike() {
