@@ -1,15 +1,17 @@
 import '../pages/index.css';
-import {Card} from '../scripts/components/Card.js'
-import {initialCards} from '../scripts/utils/initialCards.js'
-import {FormValidator} from '../scripts/components/FormValidator.js'
-import {PopupWithImage} from '../scripts/components/PopupWithImage.js'
+import { Card } from '../scripts/components/Card.js'
+import { initialCards } from '../scripts/utils/initialCards.js'
+import { FormValidator } from '../scripts/components/FormValidator.js'
+import { PopupWithImage } from '../scripts/components/PopupWithImage.js'
 import { Section } from '../scripts/components/Section.js'
 import { UserInfo } from '../scripts/components/UserInfo.js'
 import { PopupWithForm } from '../scripts/components/PopupWithForm.js'
+import { PopupDelet } from '../scripts/components/PopupDelet.js';
 
 //кнопки
 const profileEditButton = document.querySelector('.profile__edit-button');
 const elementAddButton = document.querySelector('.profile__add-button');
+const avatarEditButton = document.querySelector('.profile__avatar-edit')
 
 //селкторы валидации
 const validationConfig = {
@@ -23,6 +25,8 @@ const validationConfig = {
 };
 
 //селекторы
+const popupDeletSelector = '.delete-popup'
+const popupAvatarSelector = '.avatar-popup';
 const templateSelector = '.element-template';
 const popupProfSelector = '.profile-popup';
 const popupElementSelector = '.element-popup';
@@ -50,9 +54,22 @@ popupElement.setEventListener();
 const popupImage = new PopupWithImage(popupImageSelector)
 popupImage.setEventListener();
 
+//редактирование аватарки
+const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
+  document.querySelector('.profile__avatar').src = url.avatar;
+});
+popupAvatar.setEventListener();
+
+//подтвержденеи удаления карточки
+const popupDelet = new PopupDelet(popupDeletSelector, (item) => {
+  item.deletCard();
+  popupDelet.close()
+});
+popupDelet.setEventListener();
+
 // Инстанцирование класса Card
 const createNewCard = (items) => {
-  const card = new Card(items, templateSelector, popupImage.open);
+  const card = new Card(items, templateSelector, popupImage.open, popupDelet.open);
   return card.createCard();
 }
 
@@ -87,4 +104,10 @@ profileEditButton.addEventListener('click', () => {
   popupProfile.setInputValues(userInfo.getUserInfo())
   formValidators['profile-editform'].resetValidation()
   popupProfile.open()
+});
+
+//слушатель редактирования аватарки
+avatarEditButton.addEventListener('click', () => {
+  formValidators['avatar-editform'].resetValidation();
+  popupAvatar.open()
 });
