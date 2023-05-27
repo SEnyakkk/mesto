@@ -41,13 +41,22 @@ const userInfo = new UserInfo(inputTitleSelector, inputSubtitleSelector, avatarS
 
 //редактирование информации пользователя
 const popupProfile = new PopupWithForm(popupProfSelector, (items) => {
-  userInfo.setUserInfo(items);
+   api.setUserInfo(items)
+   .then(res => {
+      userInfo.setUserInfo({
+        username: res.name,
+        userjob: res.about,
+        avatar: res.avatar
+      });
+   })
+   .catch(error => console.error(`ошбика при редактировании профиля ${error}`))
+   .finally()
 });
 popupProfile.setEventListener();
 
 //добавление карточек
 const popupElement = new PopupWithForm(popupElementSelector, (items) => {
-  section.addItem(createNewCard(items));
+    section.addItem(createNewCard(items));
 });
 popupElement.setEventListener();
 
@@ -57,7 +66,17 @@ popupImage.setEventListener();
 
 //редактирование аватарки
 const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
-  document.querySelector(avatarSelector).src = url.avatar;
+  api.setAvatar(url)
+    .then(res => {
+      userInfo.setUserInfo({
+        username: res.name,
+        userjob: res.about,
+        avatar: res.avatar
+      });
+    })
+    .catch(error => console.error(`ошбика при обновлении аватара ${error}`))
+
+  // document.querySelector(avatarSelector).src = url.avatar;
 });
 popupAvatar.setEventListener();
 
@@ -139,3 +158,4 @@ Promise.all([api.getInfo(), api.getCards()])
     })
     section.addCard(dataCard.reverse());
   })
+  .catch(error => console.error(`ошбика при запросе данных пользователя с сервера ${error}`))
