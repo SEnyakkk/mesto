@@ -9,7 +9,7 @@ export class UserInfo {
     return {
       username: this._inputTitleSelector.textContent,
       userjob: this._inputSubtitleSelector.textContent,
-      avatar: this._avatarSelector.src
+      // avatar: this._avatarSelector.src
     }
   }
 
