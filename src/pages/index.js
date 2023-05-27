@@ -7,7 +7,7 @@ import { Section } from '../scripts/components/Section.js'
 import { UserInfo } from '../scripts/components/UserInfo.js'
 import { PopupWithForm } from '../scripts/components/PopupWithForm.js'
 import { PopupDelet } from '../scripts/components/PopupDelet.js';
-
+import { Api } from '../scripts/components/Api.js';
 //кнопки
 const profileEditButton = document.querySelector('.profile__edit-button');
 const elementAddButton = document.querySelector('.profile__add-button');
@@ -34,11 +34,12 @@ const popupImageSelector = '.popup_zoom';
 const elementsListSelector = '.elements__list';
 const inputTitleSelector = '.profile__info-title';
 const inputSubtitleSelector = '.profile__info-subtitle';
+const avatarSelector = '.profile__avatar';
 
 //сбор с полей ввода
-const userInfo = new UserInfo(inputTitleSelector, inputSubtitleSelector)
+const userInfo = new UserInfo(inputTitleSelector, inputSubtitleSelector, avatarSelector)
 
-//редактор профиля
+//редактирование информации пользователя
 const popupProfile = new PopupWithForm(popupProfSelector, (items) => {
   userInfo.setUserInfo(items);
 });
@@ -56,7 +57,7 @@ popupImage.setEventListener();
 
 //редактирование аватарки
 const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
-  document.querySelector('.profile__avatar').src = url.avatar;
+  document.querySelector(avatarSelector).src = url.avatar;
 });
 popupAvatar.setEventListener();
 
@@ -66,6 +67,22 @@ const popupDelet = new PopupDelet(popupDeletSelector, (item) => {
   popupDelet.close()
 });
 popupDelet.setEventListener();
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
+  headers: {
+    authorization: '03443a56-2e96-4faf-ad23-ecb69850558d',
+    'Content-Type': 'application/json'
+  }
+});
+
+// api.getCards()
+//   .then(res => console.log(res))
+
+// api.getInfo()
+//  .then(res => console.log(res))
+
+// console.log(api)
 
 // Инстанцирование класса Card
 const createNewCard = (items) => {
@@ -78,7 +95,7 @@ const section = new Section({
   renderer: (items) => {
     section.addItem(createNewCard(items));}
   }, elementsListSelector)
-section.addCard(initialCards);
+// section.addCard(initialCards);
 
 const formValidators = {}
 // Включение валидации
@@ -111,3 +128,14 @@ avatarEditButton.addEventListener('click', () => {
   formValidators['avatar-editform'].resetValidation();
   popupAvatar.open()
 });
+
+Promise.all([api.getInfo(), api.getCards()])
+  .then(([dataUser, dataCard]) => {
+    dataCard.forEach(card => card.myid = dataUser._id)
+    userInfo.setUserInfo({
+      username: dataUser.name,
+      userjob: dataUser.about,
+      avatar: dataUser.avatar
+    })
+    section.addCard(dataCard.reverse());
+  })

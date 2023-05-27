@@ -1,10 +1,13 @@
 export class Card {
   constructor(data, templateSelector, openZoomPopup, openPopupDelet) {
-    this._link = data.userurl;
-    this._name = data.userplace;
+    this._link = data.link;
+    this._name = data.name;
+    this._myId = data.myid;
+    this._ownerId = data.owner._id;
     this._templateSelector = templateSelector;
     this._openZoomPopup = openZoomPopup;
     this._openPopupDelet = openPopupDelet;
+
   }
 
   _getTemplate() {
@@ -22,7 +25,12 @@ export class Card {
     this._imageElement.alt = this._name;
     this._textElement.textContent = this._name;
     this._setEventListeners()
+    this._myTrashButton()
     return this._cardElement;
+  }
+
+  _myTrashButton() {
+    this._myId === this._ownerId ? this._deleteElement.style.display = 'block' : this._deleteElement.style.display = 'none'
   }
 
   //удаление елемента
