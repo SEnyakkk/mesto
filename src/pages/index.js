@@ -49,14 +49,21 @@ const popupProfile = new PopupWithForm(popupProfSelector, (items) => {
         avatar: res.avatar
       });
    })
-   .catch(error => console.error(`ошбика при редактировании профиля ${error}`))
-   .finally()
+   .catch()
+
 });
 popupProfile.setEventListener();
 
 //добавление карточек
 const popupElement = new PopupWithForm(popupElementSelector, (items) => {
-    section.addItem(createNewCard(items));
+    Promise.all([api.getInfo(), api.addCard(items)])
+        .then(([dataUser, dataCard]) => {
+        dataCard.myid = dataUser._id;
+        section.addItem(createNewCard(dataCard));
+        popupElement.close()
+      })
+      .catch()
+
 });
 popupElement.setEventListener();
 
@@ -74,7 +81,7 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
         avatar: res.avatar
       });
     })
-    .catch(error => console.error(`ошбика при обновлении аватара ${error}`))
+    .catch()
 
   // document.querySelector(avatarSelector).src = url.avatar;
 });
@@ -101,6 +108,7 @@ const api = new Api({
 // api.getInfo()
 //  .then(res => console.log(res))
 
+
 // console.log(api)
 
 // Инстанцирование класса Card
@@ -110,10 +118,10 @@ const createNewCard = (items) => {
 }
 
 //секция для отрисовки карточек
-const section = new Section({
-  renderer: (items) => {
-    section.addItem(createNewCard(items));}
-  }, elementsListSelector)
+const section = new Section((items) => {
+    section.addItem(createNewCard(items));
+  },
+   elementsListSelector)
 // section.addCard(initialCards);
 
 const formValidators = {}
@@ -158,4 +166,4 @@ Promise.all([api.getInfo(), api.getCards()])
     })
     section.addCard(dataCard.reverse());
   })
-  .catch(error => console.error(`ошбика при запросе данных пользователя с сервера ${error}`))
+  .catch()
