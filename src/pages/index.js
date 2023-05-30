@@ -83,14 +83,17 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
     })
     .catch()
 
-  // document.querySelector(avatarSelector).src = url.avatar;
 });
 popupAvatar.setEventListener();
 
 //подтвержденеи удаления карточки
-const popupDelet = new PopupDelet(popupDeletSelector, (item) => {
-  item.deletCard();
-  popupDelet.close()
+const popupDelet = new PopupDelet(popupDeletSelector, ({item, cardid}) => {
+  api.removeCard(cardid)
+    .then(() => {
+      item.deletCard()
+      popupDelet.close()
+    })
+    .catch()
 });
 popupDelet.setEventListener();
 
@@ -109,11 +112,20 @@ const api = new Api({
 //  .then(res => console.log(res))
 
 
-// console.log(api)
-
 // Инстанцирование класса Card
 const createNewCard = (items) => {
-  const card = new Card(items, templateSelector, popupImage.open, popupDelet.open);
+  const card = new Card(items, templateSelector, popupImage.open, popupDelet.open,
+  (likeButton, cardid) => {
+    likeButton.classList.contains('element__like_active') ?
+    api.removelike(cardid)
+      .then(res => {
+        card.toggleLike(res.likes)})
+        .catch() :
+    api.addlike(cardid)
+      .then(res => {
+        card.toggleLike(res.likes)})
+        .catch()
+});
   return card.createCard();
 }
 
@@ -121,8 +133,7 @@ const createNewCard = (items) => {
 const section = new Section((items) => {
     section.addItem(createNewCard(items));
   },
-   elementsListSelector)
-// section.addCard(initialCards);
+   elementsListSelector);
 
 const formValidators = {}
 // Включение валидации
