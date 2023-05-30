@@ -10,12 +10,13 @@ export class PopupDelet extends Popup {
     super.setEventListener();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._submitPopup(this._item);
+      this._submitPopup({item: this._item, cardid: this._cardid});
     })
   }
 
-  open = (item) => {
+  open = ({item, cardid}) => {
     super.open();
-    this._item = item
+    this._item = item;
+    this._cardid = cardid;
   }
 }
