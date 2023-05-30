@@ -57,4 +57,35 @@ export class Api {
     })
     .then(res => res.ok ? res.json() : Promise.reject)
   }
+
+  addlike(cardid) {
+    return fetch(`${this._url}/cards/${cardid}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+    .then(res => res.ok ? res.json() : Promise.reject)
+  }
+
+  removelike(cardid) {
+    return fetch(`${this._url}/cards/${cardid}/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+    .then(res => res.ok ? res.json() : Promise.reject)
+  }
+
+  removeCard(cardid) {
+    return fetch(`${this._url}/cards/${cardid}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+    .then(res => res.ok ? res.json() : Promise.reject)
+  }
+
 }
