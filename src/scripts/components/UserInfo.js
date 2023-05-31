@@ -12,7 +12,7 @@ export class UserInfo {
     }
   }
 
-  setUserInfo({username, userjob, avatar, _id}) {
+  setUserInfo({ username, userjob, avatar, _id }) {
     this._inputTitleSelector.textContent = username;
     this._inputSubtitleSelector.textContent = userjob;
     this._avatarSelector.src = avatar;

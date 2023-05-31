@@ -5,7 +5,7 @@ export class Api {
     this._authorization = options.headers.authorization;
   }
 
-  // isResOk = (res) => res.ok ? res.json() : Promise.reject
+  _isResOk = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 
   getInfo() {
     return fetch(`${this._url}/users/me`, {
@@ -13,7 +13,7 @@ export class Api {
         authorization: this._authorization
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   getInitialCards() {
@@ -22,7 +22,7 @@ export class Api {
         authorization: this._authorization
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   setUserInfo(data) {
@@ -34,7 +34,7 @@ export class Api {
         about: data.userjob
       })
     })
-      .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   setAvatar(data) {
@@ -45,7 +45,7 @@ export class Api {
         avatar: data.avatar,
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   addCard(data) {
@@ -57,7 +57,7 @@ export class Api {
         link: data.userurl
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   addlike(cardid) {
@@ -67,7 +67,7 @@ export class Api {
         authorization: this._authorization
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   removelike(cardid) {
@@ -77,7 +77,7 @@ export class Api {
         authorization: this._authorization
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   removeCard(cardid) {
@@ -87,7 +87,7 @@ export class Api {
         authorization: this._authorization
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
 }
