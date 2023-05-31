@@ -5,6 +5,8 @@ export class Api {
     this._authorization = options.headers.authorization;
   }
 
+  // isResOk = (res) => res.ok ? res.json() : Promise.reject
+
   getInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: {
@@ -14,7 +16,7 @@ export class Api {
       .then(res => res.ok ? res.json() : Promise.reject)
   }
 
-  getCards() {
+  getInitialCards() {
     return fetch(`${this._url}/cards`, {
       headers: {
         authorization: this._authorization
@@ -89,3 +91,11 @@ export class Api {
   }
 
 }
+
+export const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
+  headers: {
+    authorization: '03443a56-2e96-4faf-ad23-ecb69850558d',
+    'Content-Type': 'application/json'
+  }
+});

@@ -7,7 +7,7 @@ import { Section } from '../scripts/components/Section.js'
 import { UserInfo } from '../scripts/components/UserInfo.js'
 import { PopupWithForm } from '../scripts/components/PopupWithForm.js'
 import { PopupDelet } from '../scripts/components/PopupDelet.js';
-import { Api } from '../scripts/components/Api.js';
+import { api } from '../scripts/components/Api.js';
 //кнопки
 const profileEditButton = document.querySelector('.profile__edit-button');
 const elementAddButton = document.querySelector('.profile__add-button');
@@ -36,6 +36,18 @@ const inputTitleSelector = '.profile__info-title';
 const inputSubtitleSelector = '.profile__info-subtitle';
 const avatarSelector = '.profile__avatar';
 
+Promise.all([api.getInfo(), api.getInitialCards()])
+  .then(([dataUser, dataCard]) => {
+    dataCard.forEach(card => card.myid = dataUser._id)
+    userInfo.setUserInfo({
+      username: dataUser.name,
+      userjob: dataUser.about,
+      avatar: dataUser.avatar
+    })
+    section.addCard(dataCard.reverse());
+  })
+  .catch()
+
 //сбор с полей ввода
 const userInfo = new UserInfo(inputTitleSelector, inputSubtitleSelector, avatarSelector)
 
@@ -48,9 +60,10 @@ const popupProfile = new PopupWithForm(popupProfSelector, (items) => {
         userjob: res.about,
         avatar: res.avatar
       });
+      popupProfile.close();
    })
    .catch()
-
+   .finally(() => popupProfile.setSubmitText())
 });
 popupProfile.setEventListener();
 
@@ -59,10 +72,14 @@ const popupElement = new PopupWithForm(popupElementSelector, (items) => {
     Promise.all([api.getInfo(), api.addCard(items)])
         .then(([dataUser, dataCard]) => {
         dataCard.myid = dataUser._id;
+      // api.addCard(items)
+      //   .then((dataCard) => {
+      //   dataCard.myid = userInfo.setid();
         section.addItem(createNewCard(dataCard));
         popupElement.close()
       })
-      .catch()
+    .catch()
+    .finally(() => popupElement.setSubmitText())
 
 });
 popupElement.setEventListener();
@@ -80,8 +97,10 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
         userjob: res.about,
         avatar: res.avatar
       });
+      popupAvatar.close()
     })
     .catch()
+    .finally(() => popupAvatar.setSubmitText())
 
 });
 popupAvatar.setEventListener();
@@ -94,23 +113,9 @@ const popupDelet = new PopupDelet(popupDeletSelector, ({item, cardid}) => {
       popupDelet.close()
     })
     .catch()
+    .finally(() => popupDelet.setSubmitText())
 });
 popupDelet.setEventListener();
-
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
-  headers: {
-    authorization: '03443a56-2e96-4faf-ad23-ecb69850558d',
-    'Content-Type': 'application/json'
-  }
-});
-
-// api.getCards()
-//   .then(res => console.log(res))
-
-// api.getInfo()
-//  .then(res => console.log(res))
-
 
 // Инстанцирование класса Card
 const createNewCard = (items) => {
@@ -167,14 +172,3 @@ avatarEditButton.addEventListener('click', () => {
   popupAvatar.open()
 });
 
-Promise.all([api.getInfo(), api.getCards()])
-  .then(([dataUser, dataCard]) => {
-    dataCard.forEach(card => card.myid = dataUser._id)
-    userInfo.setUserInfo({
-      username: dataUser.name,
-      userjob: dataUser.about,
-      avatar: dataUser.avatar
-    })
-    section.addCard(dataCard.reverse());
-  })
-  .catch()
