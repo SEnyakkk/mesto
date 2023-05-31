@@ -5,22 +5,24 @@ export class Api {
     this._authorization = options.headers.authorization;
   }
 
+  _isResOk = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+
   getInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: {
         authorization: this._authorization
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
-  getCards() {
+  getInitialCards() {
     return fetch(`${this._url}/cards`, {
       headers: {
         authorization: this._authorization
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   setUserInfo(data) {
@@ -32,7 +34,7 @@ export class Api {
         about: data.userjob
       })
     })
-      .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   setAvatar(data) {
@@ -43,7 +45,7 @@ export class Api {
         avatar: data.avatar,
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   addCard(data) {
@@ -55,7 +57,7 @@ export class Api {
         link: data.userurl
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   addlike(cardid) {
@@ -65,7 +67,7 @@ export class Api {
         authorization: this._authorization
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   removelike(cardid) {
@@ -75,7 +77,7 @@ export class Api {
         authorization: this._authorization
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
   removeCard(cardid) {
@@ -85,7 +87,15 @@ export class Api {
         authorization: this._authorization
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._isResOk)
   }
 
 }
+
+export const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
+  headers: {
+    authorization: '03443a56-2e96-4faf-ad23-ecb69850558d',
+    'Content-Type': 'application/json'
+  }
+});

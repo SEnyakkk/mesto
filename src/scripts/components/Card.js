@@ -47,13 +47,13 @@ export class Card {
     // this._likeButton.classList.toggle('element__like_active');
   };
 
-    //проверка на наличие моего лайка
+  //проверка на наличие моего лайка
   _findMyLike() {
     this._likes.forEach(like => {
-     if (like._id === this._myid) {
-      this._likeButton.classList.add('element__like_active');
-      return
-    }
+      if (like._id === this._myid) {
+        this._likeButton.classList.add('element__like_active');
+        return
+      }
     });
     this._counter.textContent = this._likesLength
   }
@@ -66,7 +66,7 @@ export class Card {
   //удаление елемента
   _handleDelete() {
     // this._cardElement.remove();
-    this._openPopupDelet({item: this, cardid: this._cardid});
+    this._openPopupDelet({ item: this, cardid: this._cardid });
   };
 
   //отображенеи иконки удаления карточки
@@ -85,8 +85,8 @@ export class Card {
 
   //слушатели кнопок и открытия элемента
   _setEventListeners(card) {
-    this._deleteElement.addEventListener('click', () => {this._handleDelete();});
-    this._likeButton.addEventListener('click', () => {this._handleLike();});
-    this._imageElement.addEventListener('click', () => {this._handleZoom();});
+    this._deleteElement.addEventListener('click', () => { this._handleDelete(); });
+    this._likeButton.addEventListener('click', () => { this._handleLike(); });
+    this._imageElement.addEventListener('click', () => { this._handleZoom(); });
   }
 }

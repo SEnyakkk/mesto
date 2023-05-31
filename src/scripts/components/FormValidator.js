@@ -37,7 +37,7 @@ export class FormValidator {
       this._input = input;
       this._errorText = this._form.querySelector(`${this._inputErrorTemplate}${this._input.name}`);
       this._hideInputError();
-      });
+    });
     this._disableButton();
   }
 
@@ -55,7 +55,7 @@ export class FormValidator {
     this._button.disabled = true;
   }
 
-  _setEventListener(){
+  _setEventListener() {
     this._toggleButton()
     this._inputList.forEach(input => {
       input.addEventListener('input', () => {

@@ -12,10 +12,14 @@ export class UserInfo {
     }
   }
 
-  setUserInfo({username, userjob, avatar}) {
+  setUserInfo({ username, userjob, avatar, _id }) {
     this._inputTitleSelector.textContent = username;
     this._inputSubtitleSelector.textContent = userjob;
     this._avatarSelector.src = avatar;
+    this._id = _id;
   }
 
+  // setid() {
+  //   return this._id;
+  // }
 }
