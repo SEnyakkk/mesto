@@ -8,11 +8,12 @@ export class PopupDelet extends PopupWithForm {
   }
 
   setEventListener() {
-    super.setEventListener();
+    this._popupClose.addEventListener('click', this._popupCloseButton);
+    this._popup.addEventListener('mousedown', this._closePopupOverlay);
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this.renderLoading(this._submitButton.value, 'Да...')
-      this._submitForm({ item: this._item, cardid: this._cardid });
+      this._submitForm(this._item, this._cardid );
     })
   }
 
