@@ -28,7 +28,8 @@ Promise.all([api.getInfo(), api.getInitialCards()])
     userInfo.setUserInfo({
       username: dataUser.name,
       userjob: dataUser.about,
-      avatar: dataUser.avatar
+      avatar: dataUser.avatar,
+      _id: dataUser._id
     });
     userInfo.getid(dataUser._id)
     section.addCard(dataCard.reverse());
@@ -45,7 +46,8 @@ const popupProfile = new PopupWithForm(popupProfSelector, (items) => {
       userInfo.setUserInfo({
         username: res.name,
         userjob: res.about,
-        avatar: res.avatar
+        avatar: res.avatar,
+        _id: res._id
       });
       popupProfile.close();
     })
@@ -78,7 +80,8 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
       userInfo.setUserInfo({
         username: res.name,
         userjob: res.about,
-        avatar: res.avatar
+        avatar: res.avatar,
+        _id: res._id
       });
       popupAvatar.close()
     })
