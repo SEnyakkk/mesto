@@ -1,15 +1,17 @@
-import { PopupWithForm } from "./PopupWithForm.js";
+import { Popup } from "./Popup.js";
 
-export class PopupDelet extends PopupWithForm {
+
+export class PopupDelet extends Popup {
   constructor(popupSelector, submitForm) {
     super(popupSelector);
     this._submitForm = submitForm;
+    this._form = this._popup.querySelector('.form');
+    this._submitButton = this._form.querySelector('.form__save');
     this._submitText = this._submitButton.value;
   }
 
   setEventListener() {
-    this._popupClose.addEventListener('click', this._popupCloseButton);
-    this._popup.addEventListener('mousedown', this._closePopupOverlay);
+    super.setEventListener();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this.renderLoading(this._submitButton.value, 'Да...')
