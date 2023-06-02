@@ -22,11 +22,8 @@ import { inputTitleSelector } from '../scripts/utils/constants.js'
 import { inputSubtitleSelector } from '../scripts/utils/constants.js'
 import { avatarSelector } from '../scripts/utils/constants.js'
 
-let userId
-
 Promise.all([api.getInfo(), api.getInitialCards()])
   .then(([dataUser, dataCard]) => {
-    userId = dataUser._id;
     dataCard.forEach(card => card.myid = dataUser._id)
     userInfo.setUserInfo({
       username: dataUser.name,
