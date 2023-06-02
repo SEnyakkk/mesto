@@ -22,14 +22,17 @@ import { inputTitleSelector } from '../scripts/utils/constants.js'
 import { inputSubtitleSelector } from '../scripts/utils/constants.js'
 import { avatarSelector } from '../scripts/utils/constants.js'
 
+let userId
+
 Promise.all([api.getInfo(), api.getInitialCards()])
   .then(([dataUser, dataCard]) => {
+    userId = dataUser._id;
     dataCard.forEach(card => card.myid = dataUser._id)
     userInfo.setUserInfo({
       username: dataUser.name,
       userjob: dataUser.about,
       avatar: dataUser.avatar
-    })
+    });
     userInfo.getid(dataUser._id)
     section.addCard(dataCard.reverse());
   })
@@ -89,7 +92,7 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
 popupAvatar.setEventListener();
 
 //подтвержденеи удаления карточки
-const popupDelet = new PopupDelet(popupDeletSelector, ({ item, cardid }) => {
+const popupDelet = new PopupDelet(popupDeletSelector, ( item, cardid ) => {
   api.removeCard(cardid)
     .then(() => {
       item.deletCard()
