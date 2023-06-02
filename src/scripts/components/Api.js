@@ -5,10 +5,15 @@ export class Api {
     this._authorization = options.headers.authorization;
   }
 
+  // _request(endpoint, options, url = this._url) {
+  //   return fetch(`${url}endpoint`, options).then(this._isResOk)  //endpoint не получается передать нормально, что-то с синтаксисом.
+  // }
+
   _isResOk = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 
   getInfo() {
     return fetch(`${this._url}/users/me`, {
+      // this._request('/users/me' {
       headers: {
         authorization: this._authorization
       }

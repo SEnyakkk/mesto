@@ -12,14 +12,18 @@ export class UserInfo {
     }
   }
 
-  setUserInfo({ username, userjob, avatar, _id }) {
+  setUserInfo({ username, userjob, avatar, _id }) {  //не совсем понял что тут нужно изменить.
     this._inputTitleSelector.textContent = username;
     this._inputSubtitleSelector.textContent = userjob;
     this._avatarSelector.src = avatar;
     this._id = _id;
   }
 
-  // setid() {
-  //   return this._id;
-  // }
+  getid(id) {
+    this._id = id
+  }
+
+  setid() {
+    return this._id;
+  }
 }

@@ -1,40 +1,26 @@
 import '../pages/index.css';
 import { Card } from '../scripts/components/Card.js'
-import { initialCards } from '../scripts/utils/initialCards.js'
 import { FormValidator } from '../scripts/components/FormValidator.js'
 import { PopupWithImage } from '../scripts/components/PopupWithImage.js'
 import { Section } from '../scripts/components/Section.js'
 import { UserInfo } from '../scripts/components/UserInfo.js'
 import { PopupWithForm } from '../scripts/components/PopupWithForm.js'
-import { PopupDelet } from '../scripts/components/PopupDelet.js';
-import { api } from '../scripts/components/Api.js';
-//кнопки
-const profileEditButton = document.querySelector('.profile__edit-button');
-const elementAddButton = document.querySelector('.profile__add-button');
-const avatarEditButton = document.querySelector('.profile__avatar-edit')
-
-//селкторы валидации
-const validationConfig = {
-  formSelector: '.form',
-  inputSelector: '.form__data',
-  submitButtonSelector: '.form__save',
-  inputErrorTemplate: '.popup__invalid_',
-  inactiveButtonClass: 'form__save_disabled',
-  inputErrorClass: 'form__data_invalid',
-  errorClass: 'popup__invalid_visible'
-};
-
-//селекторы
-const popupDeletSelector = '.delete-popup'
-const popupAvatarSelector = '.avatar-popup';
-const templateSelector = '.element-template';
-const popupProfSelector = '.profile-popup';
-const popupElementSelector = '.element-popup';
-const popupImageSelector = '.popup_zoom';
-const elementsListSelector = '.elements__list';
-const inputTitleSelector = '.profile__info-title';
-const inputSubtitleSelector = '.profile__info-subtitle';
-const avatarSelector = '.profile__avatar';
+import { PopupDelet } from '../scripts/components/PopupDelet.js'
+import { api } from '../scripts/components/Api.js'
+import { profileEditButton } from '../scripts/utils/constants.js'
+import { elementAddButton } from '../scripts/utils/constants.js'
+import { avatarEditButton } from '../scripts/utils/constants.js'
+import { validationConfig } from '../scripts/utils/constants.js'
+import { popupDeletSelector } from '../scripts/utils/constants.js'
+import { popupAvatarSelector } from '../scripts/utils/constants.js'
+import { templateSelector } from '../scripts/utils/constants.js'
+import { popupProfSelector } from '../scripts/utils/constants.js'
+import { popupCardSelector } from '../scripts/utils/constants.js'
+import { popupImageSelector } from '../scripts/utils/constants.js'
+import { elementsListSelector } from '../scripts/utils/constants.js'
+import { inputTitleSelector } from '../scripts/utils/constants.js'
+import { inputSubtitleSelector } from '../scripts/utils/constants.js'
+import { avatarSelector } from '../scripts/utils/constants.js'
 
 Promise.all([api.getInfo(), api.getInitialCards()])
   .then(([dataUser, dataCard]) => {
@@ -44,9 +30,10 @@ Promise.all([api.getInfo(), api.getInitialCards()])
       userjob: dataUser.about,
       avatar: dataUser.avatar
     })
+    userInfo.getid(dataUser._id)
     section.addCard(dataCard.reverse());
   })
-  .catch((err) => { console.log(err) });
+  .catch(console.error);
 
 //сбор с полей ввода
 const userInfo = new UserInfo(inputTitleSelector, inputSubtitleSelector, avatarSelector)
@@ -62,27 +49,23 @@ const popupProfile = new PopupWithForm(popupProfSelector, (items) => {
       });
       popupProfile.close();
     })
-    .catch((err) => { console.log(err) })
+    .catch(console.error)
     .finally(() => popupProfile.setSubmitText())
 });
 popupProfile.setEventListener();
 
 //добавление карточек
-const popupElement = new PopupWithForm(popupElementSelector, (items) => {
-  Promise.all([api.getInfo(), api.addCard(items)])
-    .then(([dataUser, dataCard]) => {
-      dataCard.myid = dataUser._id;
-      // api.addCard(items)
-      //   .then((dataCard) => {
-      //   dataCard.myid = userInfo.setid();
+const popupCard = new PopupWithForm(popupCardSelector, (items) => {
+  api.addCard(items)
+    .then((dataCard) => {
+      dataCard.myid = userInfo.setid();
       section.addItem(createNewCard(dataCard));
-      popupElement.close()
+      popupCard.close()
     })
-    .catch((err) => { console.log(err) })
-    .finally(() => popupElement.setSubmitText())
-
+    .catch(console.error)
+    .finally(() => popupCard.setSubmitText())
 });
-popupElement.setEventListener();
+popupCard.setEventListener();
 
 //увеличение карточки
 const popupImage = new PopupWithImage(popupImageSelector)
@@ -99,7 +82,7 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
       });
       popupAvatar.close()
     })
-    .catch((err) => { console.log(err) })
+    .catch(console.error)
     .finally(() => popupAvatar.setSubmitText())
 
 });
@@ -112,7 +95,7 @@ const popupDelet = new PopupDelet(popupDeletSelector, ({ item, cardid }) => {
       item.deletCard()
       popupDelet.close()
     })
-    .catch((err) => { console.log(err) })
+    .catch(console.error)
     .finally(() => popupDelet.setSubmitText())
 });
 popupDelet.setEventListener();
@@ -120,8 +103,8 @@ popupDelet.setEventListener();
 // Инстанцирование класса Card
 const createNewCard = (items) => {
   const card = new Card(items, templateSelector, popupImage.open, popupDelet.open,
-    (likeButton, cardid) => {
-      likeButton.classList.contains('element__like_active') ?
+    (isLiked, cardid) => {
+      isLiked ?
         api.removelike(cardid)
           .then(res => {
             card.toggleLike(res.likes)
@@ -131,7 +114,7 @@ const createNewCard = (items) => {
           .then(res => {
             card.toggleLike(res.likes)
           })
-          .catch((err) => { console.log(err) });
+          .catch(console.error);
     });
   return card.createCard();
 }
@@ -158,7 +141,7 @@ enableValidation(validationConfig);
 //слушатель добавления карточки
 elementAddButton.addEventListener('click', () => {
   formValidators['place-editform'].resetValidation()
-  popupElement.open()
+  popupCard.open()
 });
 
 //слушатель редактирования полльзователя
@@ -173,4 +156,5 @@ avatarEditButton.addEventListener('click', () => {
   formValidators['avatar-editform'].resetValidation();
   popupAvatar.open()
 });
+
 
