@@ -4,14 +4,14 @@ export class PopupDelet extends PopupWithForm {
   constructor(popupSelector, submitForm) {
     super(popupSelector);
     this._submitForm = submitForm;
-    this._submitText = this._submitButton.textContent;
+    this._submitText = this._submitButton.value;
   }
 
   setEventListener() {
     super.setEventListener();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this.renderLoading(this._submitButton.textContent, 'Да...')
+      this.renderLoading(this._submitButton.value, 'Да...')
       this._submitForm({ item: this._item, cardid: this._cardid });
     })
   }
