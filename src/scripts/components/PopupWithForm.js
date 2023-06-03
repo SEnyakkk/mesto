@@ -22,20 +22,23 @@ export class PopupWithForm extends Popup {
     super.setEventListener();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault()
-      this.renderLoading(this._submitButton.value)
+      this.renderLoading(true)
       this._submitForm(this._getInputValues());
     })
   }
 
+  renderLoading(isLoading, loadingText = 'Сохранение...') {
+    if (isLoading) {
+      this._submitButton.value = loadingText;
+    } else {
+      this._submitButton.value = this._submitText;
+    }
+  }
 
   setInputValues(data) {
     this._inputList.forEach((input) => {
       input.value = data[input.name];
     })
-  }
-
-  setSubmitText() {
-    this._submitButton.value = this._submitText;
   }
 
   close() {

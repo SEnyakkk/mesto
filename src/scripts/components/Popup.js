@@ -21,15 +21,6 @@ export class Popup {
     };
   }
 
-  renderLoading(isLoading, loadingText = 'Сохранение...') {
-    if (isLoading) {
-      this._submitButton.value = loadingText;
-    } else {
-      this._submitButton.value = this._submitText;
-    }
-  }
-
-
   open() {
     this._popup.classList.add('popup_opened');
     document.addEventListener('keydown', this._closePopupEsc);

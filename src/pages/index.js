@@ -27,12 +27,7 @@ import {
 Promise.all([api.getInfo(), api.getInitialCards()])
   .then(([dataUser, dataCard]) => {
     dataCard.forEach(card => card.myid = dataUser._id)
-    userInfo.setUserInfo({
-      username: dataUser.name,
-      userjob: dataUser.about,
-      avatar: dataUser.avatar,
-      _id: dataUser._id
-    });
+    userInfo.setUserInfo(dataUser);
     userInfo.getid(dataUser._id)
     section.addCard(dataCard.reverse());
   })
@@ -45,16 +40,11 @@ const userInfo = new UserInfo(inputTitleSelector, inputSubtitleSelector, avatarS
 const popupProfile = new PopupWithForm(popupProfSelector, (items) => {
   api.setUserInfo(items)
     .then(res => {
-      userInfo.setUserInfo({
-        username: res.name,
-        userjob: res.about,
-        avatar: res.avatar,
-        _id: res._id
-      });
+      userInfo.setUserInfo(res);
       popupProfile.close();
     })
     .catch(console.error)
-    .finally(() => popupProfile.setSubmitText())
+    .finally(() => popupProfile.renderLoading())
 });
 popupProfile.setEventListener();
 
@@ -67,7 +57,7 @@ const popupCard = new PopupWithForm(popupCardSelector, (items) => {
       popupCard.close()
     })
     .catch(console.error)
-    .finally(() => popupCard.setSubmitText())
+    .finally(() => popupCard.renderLoading())
 });
 popupCard.setEventListener();
 
@@ -79,16 +69,11 @@ popupImage.setEventListener();
 const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
   api.setAvatar(url)
     .then(res => {
-      userInfo.setUserInfo({
-        username: res.name,
-        userjob: res.about,
-        avatar: res.avatar,
-        _id: res._id
-      });
+      userInfo.setUserInfo(res);
       popupAvatar.close()
     })
     .catch(console.error)
-    .finally(() => popupAvatar.setSubmitText())
+    .finally(() => popupAvatar.renderLoading())
 
 });
 popupAvatar.setEventListener();
@@ -101,7 +86,7 @@ const popupDelet = new PopupDelet(popupDeletSelector, (item, cardid) => {
       popupDelet.close()
     })
     .catch(console.error)
-    .finally(() => popupDelet.setSubmitText())
+    .finally(() => popupDelet.renderLoading())
 });
 popupDelet.setEventListener();
 
