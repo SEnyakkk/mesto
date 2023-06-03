@@ -79,6 +79,7 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
 popupAvatar.setEventListener();
 
 //подтвержденеи удаления карточки
+PopupDelet.prototype.renderLoading = popupAvatar.renderLoading;       //у PopupWithForm через прототип получил из обекта (popupAvatar) метод класса - renderLoading
 const popupDelet = new PopupDelet(popupDeletSelector, (item, cardid) => {
   api.removeCard(cardid)
     .then(() => {
@@ -89,6 +90,8 @@ const popupDelet = new PopupDelet(popupDeletSelector, (item, cardid) => {
     .finally(() => popupDelet.renderLoading())
 });
 popupDelet.setEventListener();
+// console.log(popupDelet)
+
 
 // Инстанцирование класса Card
 const createNewCard = (items) => {

@@ -7,13 +7,13 @@ export class Api {
 
   _request(endpoint, options, url = this._url) {
     return fetch(`${url}${endpoint}`, options)
-    .then(this._isResOk)
+      .then(this._isResOk)
   }
 
   _isResOk = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 
   getInfo() {
-      return this._request(`/users/me`, {
+    return this._request(`/users/me`, {
       headers: {
         authorization: this._authorization
       }
