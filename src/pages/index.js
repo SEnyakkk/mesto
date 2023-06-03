@@ -7,20 +7,22 @@ import { UserInfo } from '../scripts/components/UserInfo.js'
 import { PopupWithForm } from '../scripts/components/PopupWithForm.js'
 import { PopupDelet } from '../scripts/components/PopupDelet.js'
 import { api } from '../scripts/components/Api.js'
-import { profileEditButton } from '../scripts/utils/constants.js'
-import { elementAddButton } from '../scripts/utils/constants.js'
-import { avatarEditButton } from '../scripts/utils/constants.js'
-import { validationConfig } from '../scripts/utils/constants.js'
-import { popupDeletSelector } from '../scripts/utils/constants.js'
-import { popupAvatarSelector } from '../scripts/utils/constants.js'
-import { templateSelector } from '../scripts/utils/constants.js'
-import { popupProfSelector } from '../scripts/utils/constants.js'
-import { popupCardSelector } from '../scripts/utils/constants.js'
-import { popupImageSelector } from '../scripts/utils/constants.js'
-import { elementsListSelector } from '../scripts/utils/constants.js'
-import { inputTitleSelector } from '../scripts/utils/constants.js'
-import { inputSubtitleSelector } from '../scripts/utils/constants.js'
-import { avatarSelector } from '../scripts/utils/constants.js'
+import {
+  profileEditButton,
+  elementAddButton,
+  avatarEditButton,
+  validationConfig,
+  popupDeletSelector,
+  popupAvatarSelector,
+  templateSelector,
+  popupProfSelector,
+  popupCardSelector,
+  popupImageSelector,
+  elementsListSelector,
+  inputTitleSelector,
+  inputSubtitleSelector,
+  avatarSelector
+} from '../scripts/utils/constants.js'
 
 Promise.all([api.getInfo(), api.getInitialCards()])
   .then(([dataUser, dataCard]) => {
@@ -92,7 +94,7 @@ const popupAvatar = new PopupWithForm(popupAvatarSelector, (url) => {
 popupAvatar.setEventListener();
 
 //подтвержденеи удаления карточки
-const popupDelet = new PopupDelet(popupDeletSelector, ( item, cardid ) => {
+const popupDelet = new PopupDelet(popupDeletSelector, (item, cardid) => {
   api.removeCard(cardid)
     .then(() => {
       item.deletCard()
