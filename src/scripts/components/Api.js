@@ -5,34 +5,31 @@ export class Api {
     this._authorization = options.headers.authorization;
   }
 
-  // _request(endpoint, options, url = this._url) {
-  //   return fetch(`${url}${endpoint}`, options)
-  //   .then(this._isResOk)  // куда-то теряется _id ... Cannot read properties of undefined (reading '_id')
-  // }
+  _request(endpoint, options, url = this._url) {
+    return fetch(`${url}${endpoint}`, options)
+    .then(this._isResOk)
+  }
 
   _isResOk = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 
   getInfo() {
-    return fetch(`${this._url}/users/me`, {
-      // this._request(`/users/me`, {
+      return this._request(`/users/me`, {
       headers: {
         authorization: this._authorization
       }
     })
-      .then(this._isResOk)
   }
 
   getInitialCards() {
-    return fetch(`${this._url}/cards`, {
+    return this._request(`/cards`, {
       headers: {
         authorization: this._authorization
       }
     })
-      .then(this._isResOk)
   }
 
   setUserInfo(data) {
-    return fetch(`${this._url}/users/me`, {
+    return this._request(`/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -40,22 +37,20 @@ export class Api {
         about: data.userjob
       })
     })
-      .then(this._isResOk)
   }
 
   setAvatar(data) {
-    return fetch(`${this._url}/users/me/avatar`, {
+    return this._request(`/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar,
       })
     })
-      .then(this._isResOk)
   }
 
   addCard(data) {
-    return fetch(`${this._url}/cards`, {
+    return this._request(`/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -63,37 +58,33 @@ export class Api {
         link: data.userurl
       })
     })
-      .then(this._isResOk)
   }
 
   addlike(cardid) {
-    return fetch(`${this._url}/cards/${cardid}/likes`, {
+    return this._request(`/cards/${cardid}/likes`, {
       method: 'PUT',
       headers: {
         authorization: this._authorization
       }
     })
-      .then(this._isResOk)
   }
 
   removelike(cardid) {
-    return fetch(`${this._url}/cards/${cardid}/likes`, {
+    return this._request(`/cards/${cardid}/likes`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
       }
     })
-      .then(this._isResOk)
   }
 
   removeCard(cardid) {
-    return fetch(`${this._url}/cards/${cardid}`, {
+    return this._request(`/cards/${cardid}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
       }
     })
-      .then(this._isResOk)
   }
 
 }
