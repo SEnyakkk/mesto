@@ -6,14 +6,15 @@ export class Api {
   }
 
   // _request(endpoint, options, url = this._url) {
-  //   return fetch(`${url}endpoint`, options).then(this._isResOk)  //endpoint не получается передать нормально, что-то с синтаксисом.
+  //   return fetch(`${url}${endpoint}`, options)
+  //   .then(this._isResOk)  // куда-то теряется _id ... Cannot read properties of undefined (reading '_id')
   // }
 
   _isResOk = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 
   getInfo() {
     return fetch(`${this._url}/users/me`, {
-      // this._request('/users/me' {
+      // this._request(`/users/me`, {
       headers: {
         authorization: this._authorization
       }
